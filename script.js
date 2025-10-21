@@ -338,6 +338,364 @@ const PRESET_SCENARIOS = {
 
 
 /**
+ * Detailed Scenario Configurations with auto-fill data
+ */
+const DETAILED_SCENARIOS = {
+    healthy: {
+        name: 'Healthy State',
+        icon: '✅',
+        riskLevel: 'Low Risk ~10%',
+        riskClass: 'low',
+        description: 'This scenario represents a healthy individual with normal gene regulation, balanced transcription factor activity, and no significant genetic or epigenetic abnormalities. All cellular processes function optimally.',
+        clinicalContext: 'Represents baseline health with low disease susceptibility. Suitable for understanding normal biological function and as a control for comparison with disease states.',
+        selectedGenes: ['TP53', 'BRCA1', 'GAPDH'],
+        selectedDiseases: ['Breast Cancer', 'Cardiovascular Disease'],
+        params: {
+            tfConcentration: 50,
+            bindingAffinity: 1.0,
+            hillCoefficient: 2,
+            methylationFactor: 0.0,
+            mutationSeverity: 0.0,
+            translationEfficiency: 0.75,
+            proteinDegradation: 0.1,
+            expressionNoise: 0.05,
+            weightGenomics: 0.3,
+            weightTranscriptomics: 0.4,
+            weightProteomics: 0.3
+        },
+        keyFeatures: [
+            '✓ Normal TF concentration (50 nM)',
+            '✓ No mutations or epigenetic silencing',
+            '✓ Balanced protein synthesis and degradation',
+            '✓ Minimal biological noise'
+        ]
+    },
+    
+    cancer: {
+        name: 'Cancer Model (High Risk)',
+        icon: '🔴',
+        riskLevel: 'High Risk ~75%',
+        riskClass: 'high',
+        description: 'Models aggressive cancer with TP53 tumor suppressor mutations, EGFR receptor overexpression, and MYC oncogene amplification. Characterized by uncontrolled cell proliferation and disrupted apoptosis.',
+        clinicalContext: 'Simulates advanced stage cancer (breast, lung) with multiple oncogenic drivers. High TF activity mimics growth factor signaling dysregulation commonly seen in tumors.',
+        selectedGenes: ['TP53', 'EGFR', 'MYC', 'BRCA1'],
+        selectedDiseases: ['Breast Cancer', 'Lung Cancer'],
+        params: {
+            tfConcentration: 750,
+            bindingAffinity: 0.15,
+            hillCoefficient: 4,
+            methylationFactor: 0.0,
+            mutationSeverity: 0.85,
+            translationEfficiency: 1.3,
+            proteinDegradation: 0.04,
+            expressionNoise: 0.25,
+            weightGenomics: 0.35,
+            weightTranscriptomics: 0.35,
+            weightProteomics: 0.3
+        },
+        keyFeatures: [
+            '⚠️ Very high TF concentration (750 nM) - growth factor overactivation',
+            '⚠️ Strong TF binding (Kd = 0.15 µM) - sustained signaling',
+            '⚠️ High mutation severity (0.85) - TP53 loss of function',
+            '⚠️ Low protein degradation - oncoproteins accumulate'
+        ]
+    },
+    
+    'drug-treatment': {
+        name: 'Drug Treatment Response',
+        icon: '💊',
+        riskLevel: 'Low Risk ~15%',
+        riskClass: 'low',
+        description: 'Simulates successful therapeutic intervention with targeted drugs that enhance protein synthesis of tumor suppressors, reduce oncogenic signaling, and restore normal cellular regulation.',
+        clinicalContext: 'Represents response to combination therapy (e.g., tyrosine kinase inhibitors + epigenetic modulators). Demonstrates how drugs can shift high-risk profiles toward healthier states.',
+        selectedGenes: ['TP53', 'BRCA1', 'EGFR', 'IL6'],
+        selectedDiseases: ['Breast Cancer', 'Chronic Inflammation'],
+        params: {
+            tfConcentration: 30,
+            bindingAffinity: 2.5,
+            hillCoefficient: 2,
+            methylationFactor: 0.05,
+            mutationSeverity: 0.1,
+            translationEfficiency: 2.2,
+            proteinDegradation: 0.06,
+            expressionNoise: 0.07,
+            weightGenomics: 0.25,
+            weightTranscriptomics: 0.4,
+            weightProteomics: 0.35
+        },
+        keyFeatures: [
+            '✓ Reduced TF activity (30 nM) - normalized signaling',
+            '✓ Enhanced translation (η = 2.2) - drug-boosted protein production',
+            '✓ Minimal mutations & methylation - therapeutic correction',
+            '✓ Low noise - stable cellular environment'
+        ]
+    },
+    
+    inflammation: {
+        name: 'Chronic Inflammation',
+        icon: '🔥',
+        riskLevel: 'Moderate Risk ~55%',
+        riskClass: 'moderate',
+        description: 'Models persistent inflammatory state with elevated IL6 and TNF cytokines. Chronic inflammation is a major risk factor for cancer, cardiovascular disease, and autoimmune disorders.',
+        clinicalContext: 'Represents conditions like rheumatoid arthritis, inflammatory bowel disease, or metabolic syndrome. Elevated inflammatory cytokines create a pro-tumorigenic microenvironment.',
+        selectedGenes: ['IL6', 'TNF', 'EGFR', 'VEGFA'],
+        selectedDiseases: ['Chronic Inflammation', 'Cardiovascular Disease'],
+        params: {
+            tfConcentration: 420,
+            bindingAffinity: 0.4,
+            hillCoefficient: 3,
+            methylationFactor: 0.25,
+            mutationSeverity: 0.45,
+            translationEfficiency: 1.4,
+            proteinDegradation: 0.12,
+            expressionNoise: 0.18,
+            weightGenomics: 0.3,
+            weightTranscriptomics: 0.45,
+            weightProteomics: 0.25
+        },
+        keyFeatures: [
+            '⚠️ Elevated TF concentration (420 nM) - inflammatory signaling',
+            '⚠️ IL6/TNF overexpression - cytokine storm',
+            '⚠️ Moderate mutations (0.45) - inflammation-induced DNA damage',
+            '⚠️ High translation efficiency - cytokine amplification'
+        ]
+    },
+    
+    alzheimers: {
+        name: 'Alzheimer\'s Disease Risk',
+        icon: '🧠',
+        riskLevel: 'Moderate Risk ~60%',
+        riskClass: 'moderate',
+        description: 'Models Alzheimer\'s disease with APOE4 genetic risk variant, neuroinflammation, and progressive neurodegeneration. Characterized by amyloid-beta accumulation and tau protein pathology.',
+        clinicalContext: 'Simulates late-onset Alzheimer\'s with APOE4/4 genotype (highest genetic risk). Combines genetic predisposition with age-related neuroinflammatory changes.',
+        selectedGenes: ['APOE', 'IL6', 'TNF', 'TP53'],
+        selectedDiseases: ['Alzheimer\'s Disease'],
+        params: {
+            tfConcentration: 340,
+            bindingAffinity: 0.6,
+            hillCoefficient: 3,
+            methylationFactor: 0.55,
+            mutationSeverity: 0.65,
+            translationEfficiency: 0.5,
+            proteinDegradation: 0.32,
+            expressionNoise: 0.22,
+            weightGenomics: 0.45,
+            weightTranscriptomics: 0.3,
+            weightProteomics: 0.25
+        },
+        keyFeatures: [
+            '⚠️ APOE4 genetic variant - impaired lipid metabolism',
+            '⚠️ High methylation (0.55) - epigenetic aging',
+            '⚠️ High degradation (0.32) - protein misfolding & clearance',
+            '⚠️ Neuroinflammation - IL6/TNF activation'
+        ]
+    }
+};
+
+/**
+ * Show scenario modal with detailed information
+ */
+function showScenarioModal(scenarioKey) {
+    const scenario = DETAILED_SCENARIOS[scenarioKey];
+    if (!scenario) return;
+    
+    const modal = document.getElementById('scenario-modal');
+    const modalBody = document.getElementById('scenario-modal-body');
+    
+    // Generate genes list HTML
+    const genesHTML = scenario.selectedGenes.map(gene => 
+        `<span class="modal-gene-badge">${gene}</span>`
+    ).join('');
+    
+    // Generate diseases list HTML
+    const diseasesHTML = scenario.selectedDiseases.map(disease => 
+        `<span class="modal-disease-badge">${disease}</span>`
+    ).join('');
+    
+    // Generate key features HTML
+    const featuresHTML = scenario.keyFeatures.map(feature => 
+        `<li>${feature}</li>`
+    ).join('');
+    
+    // Populate modal
+    modalBody.innerHTML = `
+        <div class="modal-header">
+            <div class="modal-icon">${scenario.icon}</div>
+            <h2 class="modal-title">${scenario.name}</h2>
+            <div class="modal-risk-badge ${scenario.riskClass}">${scenario.riskLevel}</div>
+        </div>
+        
+        <div class="modal-description">
+            <strong>📋 Overview:</strong> ${scenario.description}
+        </div>
+        
+        <div class="modal-section">
+            <h3 class="modal-section-title">🏥 Clinical Context</h3>
+            <p style="color: var(--text-secondary); line-height: 1.7;">${scenario.clinicalContext}</p>
+        </div>
+        
+        <div class="modal-section">
+            <h3 class="modal-section-title">🧬 Selected Genes</h3>
+            <div class="modal-genes-list">${genesHTML}</div>
+        </div>
+        
+        <div class="modal-section">
+            <h3 class="modal-section-title">⚕️ Target Diseases</h3>
+            <div class="modal-diseases-list">${diseasesHTML}</div>
+        </div>
+        
+        <div class="modal-section">
+            <h3 class="modal-section-title">⚙️ Key Parameters</h3>
+            <div class="modal-params-grid">
+                <div class="modal-param-item">
+                    <div class="modal-param-name">TF Concentration</div>
+                    <div class="modal-param-value">${scenario.params.tfConcentration} nM</div>
+                </div>
+                <div class="modal-param-item">
+                    <div class="modal-param-name">Binding Affinity</div>
+                    <div class="modal-param-value">${scenario.params.bindingAffinity} µM</div>
+                </div>
+                <div class="modal-param-item">
+                    <div class="modal-param-name">Hill Coefficient</div>
+                    <div class="modal-param-value">${scenario.params.hillCoefficient}</div>
+                </div>
+                <div class="modal-param-item">
+                    <div class="modal-param-name">Methylation</div>
+                    <div class="modal-param-value">${scenario.params.methylationFactor}</div>
+                </div>
+                <div class="modal-param-item">
+                    <div class="modal-param-name">Mutation Severity</div>
+                    <div class="modal-param-value">${scenario.params.mutationSeverity}</div>
+                </div>
+                <div class="modal-param-item">
+                    <div class="modal-param-name">Translation Efficiency</div>
+                    <div class="modal-param-value">${scenario.params.translationEfficiency}</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="modal-section">
+            <h3 class="modal-section-title">🎯 Key Features</h3>
+            <ul style="color: var(--text-secondary); line-height: 2; padding-left: 20px;">
+                ${featuresHTML}
+            </ul>
+        </div>
+        
+        <div class="modal-actions">
+            <button class="btn-try-scenario" onclick="applyScenario('${scenarioKey}')">
+                🚀 Try This Scenario
+            </button>
+            <button class="btn-cancel" onclick="closeScenarioModal()">
+                Cancel
+            </button>
+        </div>
+    `;
+    
+    modal.classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+}
+
+/**
+ * Close scenario modal
+ */
+function closeScenarioModal() {
+    const modal = document.getElementById('scenario-modal');
+    modal.classList.add('hidden');
+    document.body.style.overflow = 'auto';
+}
+
+/**
+ * Apply scenario - auto-fill all parameters, genes, and diseases
+ */
+function applyScenario(scenarioKey) {
+    const scenario = DETAILED_SCENARIOS[scenarioKey];
+    if (!scenario) return;
+    
+    // Close modal
+    closeScenarioModal();
+    
+    // Show loading message
+    const loadingMsg = document.createElement('div');
+    loadingMsg.style.cssText = `
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+        color: white;
+        padding: 30px 50px;
+        border-radius: 15px;
+        font-size: 18px;
+        font-weight: 600;
+        z-index: 10001;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+    `;
+    loadingMsg.textContent = `🔄 Loading ${scenario.name}...`;
+    document.body.appendChild(loadingMsg);
+    
+    setTimeout(() => {
+        // Save current for comparison
+        state.previousParams = { ...state.params };
+        
+        // Apply parameters
+        Object.assign(state.params, scenario.params);
+        
+        // Select genes
+        state.selectedGenes = [];
+        scenario.selectedGenes.forEach(symbol => {
+            const gene = GENE_DATABASE.find(g => g.symbol === symbol);
+            if (gene) state.selectedGenes.push(gene);
+        });
+        
+        // Select diseases
+        state.selectedDiseases = [];
+        scenario.selectedDiseases.forEach(name => {
+            const disease = DISEASE_DATABASE.find(d => d.name === name);
+            if (disease) state.selectedDiseases.push(disease);
+        });
+        
+        // Update UI
+        syncParametersToUI();
+        updateNormalizedWeights();
+        renderGeneList();
+        renderDiseaseList();
+        resetSimulation();
+        updateContributionChart();
+        
+        // Remove loading message
+        document.body.removeChild(loadingMsg);
+        
+        // Success notification
+        const successMsg = document.createElement('div');
+        successMsg.style.cssText = `
+            position: fixed;
+            top: 100px;
+            right: 30px;
+            background: var(--success-color);
+            color: white;
+            padding: 20px 30px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            z-index: 10001;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+            animation: slideInRight 0.3s ease;
+        `;
+        successMsg.innerHTML = `✅ ${scenario.name} applied successfully!<br><small style="font-weight:400; opacity:0.9;">Scroll down to run the simulation</small>`;
+        document.body.appendChild(successMsg);
+        
+        setTimeout(() => {
+            document.body.removeChild(successMsg);
+        }, 4000);
+        
+        // Scroll to controls
+        document.querySelector('.control-sidebar').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        
+    }, 500);
+}
+
+
+/**
  * Tutorial Steps
  */
 const TUTORIAL_STEPS = [
@@ -720,8 +1078,9 @@ async function exportHTMLReport() {
     }
 }
 
+
 /**
- * Generate complete HTML report content
+ * Generate complete HTML report content with enhanced styling
  */
 function generateHTMLReport(chartImages) {
     const currentDate = new Date().toLocaleString('en-US', {
@@ -729,8 +1088,13 @@ function generateHTMLReport(chartImages) {
         month: 'long',
         day: 'numeric',
         hour: '2-digit',
-        minute: '2-digit'
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: true
     });
+    
+    // Detect applied scenario
+    const appliedScenario = detectAppliedScenario();
     
     // Calculate current disease risks
     const currentValues = {};
@@ -767,94 +1131,161 @@ function generateHTMLReport(chartImages) {
         diseaseRisks.push({
             name: disease.name,
             risk: result.risk,
-            riskClass: result.risk >= 70 ? 'high' : result.risk >= 40 ? 'moderate' : 'low'
+            riskClass: result.risk >= 70 ? 'high' : result.risk >= 40 ? 'moderate' : 'low',
+            contributions: result.contributions
         });
     }
     
     // Generate genes summary table
     let genesSummaryHTML = '';
-    state.selectedGenes.forEach(gene => {
+    state.selectedGenes.forEach((gene, index) => {
         const values = currentValues[gene.symbol];
+        const rowClass = index % 2 === 0 ? 'even-row' : 'odd-row';
         genesSummaryHTML += `
-            <tr>
-                <td><strong>${gene.symbol}</strong></td>
+            <tr class="${rowClass}">
+                <td><strong style="color: #3498db;">${gene.symbol}</strong></td>
                 <td>${gene.name}</td>
-                <td>${values.genomic.toFixed(2)}</td>
-                <td>${values.transcriptomic.toFixed(2)}</td>
-                <td>${values.proteomic.toFixed(2)}</td>
+                <td><span class="value-badge">${values.genomic.toFixed(2)}</span></td>
+                <td><span class="value-badge">${values.transcriptomic.toFixed(2)}</span></td>
+                <td><span class="value-badge">${values.proteomic.toFixed(2)}</span></td>
             </tr>
         `;
     });
     
-    // Generate disease risk table
+    // Generate disease risk table with detailed contributions
     let diseaseRiskHTML = '';
     diseaseRisks.forEach(disease => {
         const colorClass = disease.riskClass === 'high' ? '#e74c3c' : 
                           disease.riskClass === 'moderate' ? '#f39c12' : '#27ae60';
+        const icon = disease.riskClass === 'high' ? '🔴' : 
+                     disease.riskClass === 'moderate' ? '🟡' : '🟢';
+        
         diseaseRiskHTML += `
-            <tr>
-                <td><strong>${disease.name}</strong></td>
-                <td style="color: ${colorClass}; font-weight: bold; font-size: 1.2em;">${disease.risk.toFixed(1)}%</td>
+            <tr class="disease-row">
                 <td>
-                    <span style="
-                        padding: 5px 15px;
-                        border-radius: 20px;
-                        background-color: ${colorClass}20;
-                        color: ${colorClass};
-                        font-weight: 600;
-                        text-transform: uppercase;
-                        font-size: 0.85em;
-                    ">
-                        ${disease.riskClass} Risk
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <span style="font-size: 1.5em;">${icon}</span>
+                        <strong>${disease.name}</strong>
+                    </div>
+                </td>
+                <td>
+                    <div style="font-size: 2em; font-weight: bold; color: ${colorClass};">
+                        ${disease.risk.toFixed(1)}%
+                    </div>
+                </td>
+                <td>
+                    <span class="risk-badge risk-${disease.riskClass}">
+                        ${disease.riskClass.toUpperCase()} RISK
                     </span>
+                </td>
+                <td style="font-size: 0.9em; color: #7f8c8d;">
+                    <div>G: ${Math.abs(disease.contributions.genomic).toFixed(2)}</div>
+                    <div>T: ${Math.abs(disease.contributions.transcriptomic).toFixed(2)}</div>
+                    <div>P: ${Math.abs(disease.contributions.proteomic).toFixed(2)}</div>
                 </td>
             </tr>
         `;
     });
     
-    // Generate parameters table
+    // Generate normalized weights
     const normalized = normalizeWeights(
         state.params.weightGenomics,
         state.params.weightTranscriptomics,
         state.params.weightProteomics
     );
     
-    // Generate complete HTML
+    // Generate scenario section if applicable
+    const scenarioHTML = appliedScenario ? `
+        <div class="section">
+            <h2 class="section-title">
+                <span class="section-icon">🎯</span>
+                Applied Scenario
+            </h2>
+            
+            <div class="scenario-showcase-box">
+                <div class="scenario-header-box">
+                    <div class="scenario-icon-large">${appliedScenario.icon}</div>
+                    <div class="scenario-info-box">
+                        <h3 style="margin: 0 0 10px 0; font-size: 2em; color: #2c3e50;">${appliedScenario.name}</h3>
+                        <div class="scenario-risk-badge ${appliedScenario.riskClass}">
+                            ${appliedScenario.riskLevel}
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="scenario-description-box">
+                    <h4 style="color: #3498db; margin-bottom: 10px;">📋 Overview</h4>
+                    <p style="line-height: 1.8; color: #555;">
+                        ${appliedScenario.description}
+                    </p>
+                </div>
+                
+                <div class="scenario-clinical-box">
+                    <h4 style="color: #9b59b6; margin-bottom: 10px;">🏥 Clinical Context</h4>
+                    <p style="line-height: 1.8; color: #555;">
+                        ${appliedScenario.clinicalContext}
+                    </p>
+                </div>
+                
+                <div class="scenario-genes-box">
+                    <h4 style="color: #2ecc71; margin-bottom: 10px;">🧬 Selected Genes</h4>
+                    <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+                        ${appliedScenario.selectedGenes.map(g => 
+                            `<span class="gene-badge-report">${g}</span>`
+                        ).join('')}
+                    </div>
+                </div>
+            </div>
+        </div>
+    ` : '';
+    
+    // Generate complete HTML with enhanced styling
     return `
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Multi-Omics Gene Regulation & Disease Prediction Report</title>
+    <title>Multi-Omics Analysis Report - ${new Date().toISOString().slice(0,10)}</title>
     <style>
+        /* Global Styles */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
         
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap');
+        
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             line-height: 1.6;
             color: #2c3e50;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            padding: 20px;
+            padding: 30px 20px;
+            min-height: 100vh;
         }
         
         .report-container {
             max-width: 1200px;
             margin: 0 auto;
             background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            border-radius: 24px;
+            box-shadow: 0 25px 80px rgba(0,0,0,0.4);
             overflow: hidden;
+            animation: fadeIn 0.6s ease;
         }
         
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Header Styles */
         .report-header {
-            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            padding: 50px 40px;
+            padding: 60px 50px;
             text-align: center;
             position: relative;
             overflow: hidden;
@@ -863,240 +1294,458 @@ function generateHTMLReport(chartImages) {
         .report-header::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
-            opacity: 0.3;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: pulse 15s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            50% { transform: scale(1.1) rotate(180deg); }
+        }
+        
+        .report-header-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .header-logo {
+            font-size: 4em;
+            margin-bottom: 20px;
+            filter: drop-shadow(0 5px 15px rgba(0,0,0,0.3));
         }
         
         .report-header h1 {
-            font-size: 2.5em;
-            margin-bottom: 10px;
-            position: relative;
-            z-index: 1;
+            font-size: 2.8em;
+            margin-bottom: 15px;
+            font-weight: 800;
+            text-shadow: 0 3px 10px rgba(0,0,0,0.3);
+            letter-spacing: -0.5px;
         }
         
         .report-header .subtitle {
-            font-size: 1.2em;
+            font-size: 1.3em;
             opacity: 0.95;
-            position: relative;
-            z-index: 1;
+            font-weight: 300;
+            margin-bottom: 20px;
         }
         
-        .report-header .date {
-            margin-top: 20px;
+        .report-header .meta-info {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(10px);
+            padding: 12px 30px;
+            border-radius: 25px;
             font-size: 0.95em;
-            opacity: 0.9;
-            position: relative;
-            z-index: 1;
+            margin-top: 10px;
         }
         
+        /* Body Styles */
         .report-body {
-            padding: 40px;
+            padding: 50px;
         }
         
         .section {
-            margin-bottom: 50px;
+            margin-bottom: 60px;
+            animation: slideUp 0.5s ease;
+        }
+        
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         
         .section-title {
-            font-size: 1.8em;
-            color: #3498db;
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 3px solid #3498db;
+            font-size: 2em;
+            color: #2c3e50;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 4px solid transparent;
+            border-image: linear-gradient(90deg, #667eea, #764ba2) 1;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 15px;
+            font-weight: 700;
         }
         
         .section-icon {
-            font-size: 1.2em;
+            font-size: 1.3em;
+            filter: drop-shadow(0 2px 5px rgba(0,0,0,0.1));
         }
         
+        /* Info Cards Grid */
         .info-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
         }
         
         .info-card {
             background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            padding: 25px;
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .info-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            transform: scaleX(0);
+            transform-origin: left;
             transition: transform 0.3s ease;
         }
         
         .info-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+        
+        .info-card:hover::before {
+            transform: scaleX(1);
         }
         
         .info-card-title {
-            font-size: 0.9em;
+            font-size: 0.85em;
             color: #7f8c8d;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 1.5px;
+            font-weight: 600;
         }
         
         .info-card-value {
-            font-size: 2em;
-            font-weight: bold;
+            font-size: 2.5em;
+            font-weight: 800;
             color: #2c3e50;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
         
+        /* Highlight Box */
+        .highlight-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 20px;
+            margin: 40px 0;
+            box-shadow: 0 15px 50px rgba(102, 126, 234, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .highlight-box::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
+        }
+        
+        .highlight-box h3 {
+            margin-bottom: 20px;
+            font-size: 1.8em;
+            font-weight: 700;
+            position: relative;
+        }
+        
+        .highlight-box p {
+            position: relative;
+            font-size: 1.1em;
+            line-height: 1.9;
+            opacity: 0.95;
+        }
+        
+        /* Tables */
         table {
             width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin: 30px 0;
             background: white;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            border-radius: 15px;
             overflow: hidden;
         }
         
         thead {
-            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
         }
         
         th {
-            padding: 15px;
+            padding: 20px 18px;
             text-align: left;
             font-weight: 600;
             text-transform: uppercase;
-            font-size: 0.9em;
-            letter-spacing: 0.5px;
+            font-size: 0.85em;
+            letter-spacing: 1px;
         }
         
         td {
-            padding: 15px;
-            border-bottom: 1px solid #ecf0f1;
+            padding: 18px;
+            border-bottom: 1px solid #f0f0f0;
+            transition: background-color 0.2s ease;
+        }
+        
+        tr.even-row {
+            background-color: #fafafa;
+        }
+        
+        tbody tr:hover {
+            background-color: #f0f4ff;
         }
         
         tr:last-child td {
             border-bottom: none;
         }
         
-        tbody tr:hover {
-            background-color: #f8f9fa;
+        .value-badge {
+            display: inline-block;
+            padding: 6px 14px;
+            background: linear-gradient(135deg, #667eea20, #764ba220);
+            border-radius: 8px;
+            font-family: 'Fira Code', monospace;
+            font-weight: 500;
+            color: #667eea;
+            font-size: 0.95em;
         }
         
+        .risk-badge {
+            display: inline-block;
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-weight: 700;
+            font-size: 0.85em;
+            letter-spacing: 0.5px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+        }
+        
+        .risk-low {
+            background: linear-gradient(135deg, #27ae60, #2ecc71);
+            color: white;
+        }
+        
+        .risk-moderate {
+            background: linear-gradient(135deg, #f39c12, #f1c40f);
+            color: white;
+        }
+        
+        .risk-high {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            color: white;
+        }
+        
+        .disease-row td {
+            padding: 25px 18px;
+        }
+        
+        /* Charts */
         .chart-container {
-            margin: 30px 0;
+            margin: 40px 0;
             text-align: center;
-            background: #f8f9fa;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+        }
+        
+        .chart-title {
+            font-size: 1.5em;
+            color: #2c3e50;
+            margin-bottom: 25px;
+            font-weight: 700;
         }
         
         .chart-container img {
             max-width: 100%;
             height: auto;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            border: 4px solid white;
         }
         
-        .chart-title {
-            font-size: 1.3em;
-            color: #2c3e50;
-            margin-bottom: 20px;
-            font-weight: 600;
-        }
-        
+        /* Parameters */
         .parameter-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 15px;
-            margin: 20px 0;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 18px;
+            margin: 30px 0;
         }
         
         .parameter-item {
-            background: #f8f9fa;
-            padding: 15px 20px;
-            border-radius: 10px;
-            border-left: 4px solid #3498db;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            padding: 18px 22px;
+            border-radius: 12px;
+            border-left: 5px solid #667eea;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        
+        .parameter-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
         
         .parameter-name {
             font-weight: 500;
-            color: #7f8c8d;
+            color: #555;
+            font-size: 0.95em;
         }
         
         .parameter-value {
-            font-weight: bold;
+            font-weight: 700;
             color: #2c3e50;
-            font-family: 'Courier New', monospace;
+            font-family: 'Fira Code', monospace;
+            font-size: 1.05em;
+            background: white;
+            padding: 5px 12px;
+            border-radius: 6px;
         }
         
-        .highlight-box {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        .parameter-group-title {
+            font-size: 1.4em;
+            color: #667eea;
+            margin: 40px 0 20px 0;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        /* Scenario Showcase */
+        .scenario-showcase-box {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 40px;
+            border-radius: 20px;
+            margin: 30px 0;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+        }
+        
+        .scenario-header-box {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            margin-bottom: 30px;
+            padding-bottom: 30px;
+            border-bottom: 2px solid #dee2e6;
+        }
+        
+        .scenario-icon-large {
+            font-size: 5em;
+            filter: drop-shadow(0 5px 15px rgba(0,0,0,0.2));
+        }
+        
+        .scenario-risk-badge {
+            display: inline-block;
+            padding: 10px 25px;
+            border-radius: 25px;
+            font-weight: 700;
+            font-size: 1em;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+        }
+        
+        .scenario-description-box,
+        .scenario-clinical-box,
+        .scenario-genes-box {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+        }
+        
+        .gene-badge-report {
+            display: inline-block;
+            padding: 8px 16px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
             color: white;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9em;
+            box-shadow: 0 3px 10px rgba(102, 126, 234, 0.3);
+        }
+        
+        /* Mathematical Models */
+        .math-box {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
             padding: 30px;
             border-radius: 15px;
-            margin: 30px 0;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            border-left: 5px solid #9b59b6;
+            margin: 20px 0;
         }
         
-        .highlight-box h3 {
+        .math-box h4 {
+            color: #9b59b6;
             margin-bottom: 15px;
-            font-size: 1.5em;
+            font-size: 1.2em;
+            font-weight: 700;
         }
         
+        .formula {
+            font-family: 'Fira Code', monospace;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            font-size: 0.95em;
+            color: #2c3e50;
+            box-shadow: inset 0 2px 8px rgba(0,0,0,0.05);
+            line-height: 1.8;
+        }
+        
+        /* Footer */
         .footer {
-            background: #34495e;
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
             color: white;
-            padding: 30px 40px;
+            padding: 50px 40px;
             text-align: center;
         }
         
-        .footer-content {
-            max-width: 800px;
-            margin: 0 auto;
+        .footer-logo {
+            font-size: 3em;
+            margin-bottom: 20px;
+            filter: drop-shadow(0 3px 10px rgba(0,0,0,0.3));
+        }
+        
+        .footer h3 {
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            font-weight: 700;
         }
         
         .footer p {
-            margin: 10px 0;
+            margin: 12px 0;
             opacity: 0.9;
+            font-size: 1.05em;
         }
         
-        .badge {
-            display: inline-block;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 0.85em;
-            font-weight: 600;
-            margin: 5px;
+        .footer-divider {
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            margin: 25px auto;
+            border-radius: 2px;
         }
         
-        .badge-primary {
-            background: #3498db;
-            color: white;
-        }
-        
-        .badge-success {
-            background: #27ae60;
-            color: white;
-        }
-        
-        .badge-warning {
-            background: #f39c12;
-            color: white;
-        }
-        
-        .badge-danger {
-            background: #e74c3c;
-            color: white;
-        }
-        
+        /* Print Styles */
         @media print {
             body {
                 background: white;
@@ -1106,20 +1755,30 @@ function generateHTMLReport(chartImages) {
             .report-container {
                 box-shadow: none;
                 max-width: 100%;
+                border-radius: 0;
             }
             
             .section {
                 page-break-inside: avoid;
             }
+            
+            .chart-container {
+                page-break-inside: avoid;
+            }
         }
         
+        /* Responsive Design */
         @media (max-width: 768px) {
-            .report-header h1 {
-                font-size: 1.8em;
+            .report-body {
+                padding: 30px 25px;
             }
             
-            .report-body {
-                padding: 20px;
+            .report-header {
+                padding: 40px 25px;
+            }
+            
+            .report-header h1 {
+                font-size: 2em;
             }
             
             .info-grid {
@@ -1129,22 +1788,33 @@ function generateHTMLReport(chartImages) {
             .parameter-grid {
                 grid-template-columns: 1fr;
             }
+            
+            .scenario-header-box {
+                flex-direction: column;
+                text-align: center;
+            }
         }
     </style>
 </head>
 <body>
     <div class="report-container">
+        
         <!-- Header -->
         <div class="report-header">
-            <h1>🧬 Multi-Omics Gene Regulation & Disease Prediction Report</h1>
-            <p class="subtitle">Comprehensive Analysis of Gene Expression and Disease Risk</p>
-            <p class="date">📅 Generated on: ${currentDate}</p>
+            <div class="report-header-content">
+                <div class="header-logo">🧬</div>
+                <h1>Multi-Omics Gene Regulation & Disease Prediction Report</h1>
+                <p class="subtitle">Comprehensive Analysis of Gene Expression Dynamics and Disease Risk Assessment</p>
+                <div class="meta-info">
+                    📅 Generated on: ${currentDate}
+                </div>
+            </div>
         </div>
         
         <!-- Body -->
         <div class="report-body">
             
-            <!-- Summary Section -->
+            <!-- Executive Summary -->
             <div class="section">
                 <h2 class="section-title">
                     <span class="section-icon">📊</span>
@@ -1172,16 +1842,19 @@ function generateHTMLReport(chartImages) {
                 
                 <div class="highlight-box">
                     <h3>🎯 Key Finding</h3>
-                    <p style="font-size: 1.1em; line-height: 1.8;">
-                        This analysis evaluated ${state.selectedGenes.length} genes (${state.selectedGenes.map(g => g.symbol).join(', ')}) 
-                        across ${state.selectedDiseases.length} disease condition(s) using multi-omics integration. 
-                        The simulation modeled transcription factor binding, epigenetic regulation, and protein dynamics 
-                        over ${state.simulation.currentTime.toFixed(1)} hours to predict disease risk.
+                    <p>
+                        This comprehensive multi-omics analysis evaluated <strong>${state.selectedGenes.length} genes</strong> 
+                        (${state.selectedGenes.map(g => g.symbol).join(', ')}) across <strong>${state.selectedDiseases.length} disease condition(s)</strong> 
+                        using advanced integration of genomics, transcriptomics, and proteomics data. The simulation modeled transcription factor binding 
+                        kinetics, epigenetic regulation mechanisms, and protein dynamics over <strong>${state.simulation.currentTime.toFixed(1)} hours</strong> 
+                        to generate precise disease risk predictions based on realistic biological models.
                     </p>
                 </div>
             </div>
             
-            <!-- Disease Risk Section -->
+            ${scenarioHTML}
+            
+            <!-- Disease Risk Assessment -->
             <div class="section">
                 <h2 class="section-title">
                     <span class="section-icon">⚕️</span>
@@ -1194,6 +1867,7 @@ function generateHTMLReport(chartImages) {
                             <th>Disease</th>
                             <th>Risk Score</th>
                             <th>Risk Level</th>
+                            <th>Omics Contributions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -1202,11 +1876,11 @@ function generateHTMLReport(chartImages) {
                 </table>
             </div>
             
-            <!-- Genes Summary Section -->
+            <!-- Gene Expression Summary -->
             <div class="section">
                 <h2 class="section-title">
                     <span class="section-icon">🧬</span>
-                    Gene Expression Summary
+                    Gene Expression Profile
                 </h2>
                 
                 <table>
@@ -1225,7 +1899,7 @@ function generateHTMLReport(chartImages) {
                 </table>
             </div>
             
-            <!-- Charts Section -->
+            <!-- Visualizations -->
             <div class="section">
                 <h2 class="section-title">
                     <span class="section-icon">📈</span>
@@ -1234,34 +1908,43 @@ function generateHTMLReport(chartImages) {
                 
                 ${chartImages.mrna ? `
                 <div class="chart-container">
-                    <div class="chart-title">mRNA Expression Levels Over Time</div>
-                    <img src="${chartImages.mrna}" alt="mRNA Expression Chart">
+                    <div class="chart-title">📊 mRNA Expression Dynamics Over Time</div>
+                    <img src="${chartImages.mrna}" alt="mRNA Expression Time Series">
+                    <p style="margin-top: 15px; color: #7f8c8d; font-size: 0.9em;">
+                        Temporal dynamics of mRNA expression levels showing transcriptional activity across selected genes
+                    </p>
                 </div>
                 ` : ''}
                 
                 ${chartImages.protein ? `
                 <div class="chart-container">
-                    <div class="chart-title">Protein Abundance Over Time</div>
-                    <img src="${chartImages.protein}" alt="Protein Abundance Chart">
+                    <div class="chart-title">🔬 Protein Abundance Dynamics Over Time</div>
+                    <img src="${chartImages.protein}" alt="Protein Abundance Time Series">
+                    <p style="margin-top: 15px; color: #7f8c8d; font-size: 0.9em;">
+                        Protein level changes reflecting translation efficiency and degradation kinetics
+                    </p>
                 </div>
                 ` : ''}
                 
                 ${chartImages.contribution ? `
                 <div class="chart-container">
-                    <div class="chart-title">Per-Gene Contribution to Disease Risk</div>
-                    <img src="${chartImages.contribution}" alt="Contribution Chart">
+                    <div class="chart-title">📊 Per-Gene Contribution to Disease Risk</div>
+                    <img src="${chartImages.contribution}" alt="Gene Contribution Analysis">
+                    <p style="margin-top: 15px; color: #7f8c8d; font-size: 0.9em;">
+                        Quantitative assessment of individual gene contributions to overall disease risk score
+                    </p>
                 </div>
                 ` : ''}
             </div>
             
-            <!-- Simulation Parameters Section -->
+            <!-- Simulation Parameters -->
             <div class="section">
                 <h2 class="section-title">
                     <span class="section-icon">⚙️</span>
                     Simulation Parameters
                 </h2>
                 
-                <h3 style="margin: 30px 0 15px 0; color: #3498db;">Transcription Factor Binding</h3>
+                <h3 class="parameter-group-title">🧪 Transcription Factor Binding Kinetics</h3>
                 <div class="parameter-grid">
                     <div class="parameter-item">
                         <span class="parameter-name">TF Concentration</span>
@@ -1277,10 +1960,10 @@ function generateHTMLReport(chartImages) {
                     </div>
                 </div>
                 
-                <h3 style="margin: 30px 0 15px 0; color: #3498db;">Epigenetic & Genetic Regulation</h3>
+                <h3 class="parameter-group-title">🔬 Epigenetic & Genetic Regulation</h3>
                 <div class="parameter-grid">
                     <div class="parameter-item">
-                        <span class="parameter-name">Methylation Factor</span>
+                        <span class="parameter-name">DNA Methylation Factor</span>
                         <span class="parameter-value">${state.params.methylationFactor}</span>
                     </div>
                     <div class="parameter-item">
@@ -1289,23 +1972,23 @@ function generateHTMLReport(chartImages) {
                     </div>
                 </div>
                 
-                <h3 style="margin: 30px 0 15px 0; color: #3498db;">Translation & Protein Dynamics</h3>
+                <h3 class="parameter-group-title">🧫 Translation & Protein Dynamics</h3>
                 <div class="parameter-grid">
                     <div class="parameter-item">
                         <span class="parameter-name">Translation Efficiency (η)</span>
                         <span class="parameter-value">${state.params.translationEfficiency}</span>
                     </div>
                     <div class="parameter-item">
-                        <span class="parameter-name">Protein Degradation Rate</span>
+                        <span class="parameter-name">Protein Degradation Rate (δ)</span>
                         <span class="parameter-value">${state.params.proteinDegradation} t⁻¹</span>
                     </div>
                     <div class="parameter-item">
-                        <span class="parameter-name">Expression Noise</span>
+                        <span class="parameter-name">Expression Noise (σ)</span>
                         <span class="parameter-value">${state.params.expressionNoise}</span>
                     </div>
                 </div>
                 
-                <h3 style="margin: 30px 0 15px 0; color: #3498db;">Multi-Omics Integration Weights</h3>
+                <h3 class="parameter-group-title">📊 Multi-Omics Integration Weights</h3>
                 <div class="parameter-grid">
                     <div class="parameter-item">
                         <span class="parameter-name">Genomics Weight (w₁)</span>
@@ -1322,99 +2005,148 @@ function generateHTMLReport(chartImages) {
                 </div>
             </div>
             
-            <!-- Mathematical Models Section -->
+            <!-- Mathematical Models -->
             <div class="section">
                 <h2 class="section-title">
                     <span class="section-icon">📐</span>
-                    Mathematical Models Used
+                    Mathematical Models & Biological Principles
                 </h2>
                 
-                <div style="background: #f8f9fa; padding: 25px; border-radius: 10px; border-left: 4px solid #9b59b6;">
-                    <h4 style="color: #9b59b6; margin-bottom: 15px;">Gene Expression (Hill Equation):</h4>
-                    <p style="font-family: 'Courier New', monospace; background: white; padding: 15px; border-radius: 5px;">
+                <div class="math-box">
+                    <h4>🧬 Gene Expression (Hill Equation)</h4>
+                    <div class="formula">
                         E<sub>gene</sub> = V<sub>max</sub> × [TF]<sup>n</sup> / (K<sub>d</sub><sup>n</sup> + [TF]<sup>n</sup>) × (1 - methylation) × (1 - mutation)
+                    </div>
+                    <p style="margin-top: 12px; color: #555; line-height: 1.7;">
+                        Models transcription factor binding with cooperative kinetics, incorporating epigenetic silencing and genetic mutations.
                     </p>
-                    
-                    <h4 style="color: #9b59b6; margin: 25px 0 15px 0;">Transcriptomics (with stochastic noise):</h4>
-                    <p style="font-family: 'Courier New', monospace; background: white; padding: 15px; border-radius: 5px;">
-                        T = E<sub>gene</sub> × (1 + ε), where ε ~ N(0, noise)
+                </div>
+                
+                <div class="math-box">
+                    <h4>📊 Transcriptomics (Stochastic Model)</h4>
+                    <div class="formula">
+                        T = E<sub>gene</sub> × (1 + ε), where ε ~ N(0, σ<sub>noise</sub>)
+                    </div>
+                    <p style="margin-top: 12px; color: #555; line-height: 1.7;">
+                        Incorporates biological variability through Gaussian noise, reflecting stochastic gene expression.
                     </p>
-                    
-                    <h4 style="color: #9b59b6; margin: 25px 0 15px 0;">Protein Dynamics (differential equation):</h4>
-                    <p style="font-family: 'Courier New', monospace; background: white; padding: 15px; border-radius: 5px;">
+                </div>
+                
+                <div class="math-box">
+                    <h4>🔬 Protein Dynamics (Differential Equation)</h4>
+                    <div class="formula">
                         dP/dt = η × T - δ × P
+                    </div>
+                    <p style="margin-top: 12px; color: #555; line-height: 1.7;">
+                        Models protein synthesis (translation) and degradation using first-order kinetics, where η = translation efficiency and δ = degradation rate.
                     </p>
-                    
-                    <h4 style="color: #9b59b6; margin: 25px 0 15px 0;">Disease Risk (sigmoid model):</h4>
-                    <p style="font-family: 'Courier New', monospace; background: white; padding: 15px; border-radius: 5px;">
+                </div>
+                
+                <div class="math-box">
+                    <h4>⚕️ Disease Risk (Sigmoid Integration)</h4>
+                    <div class="formula">
                         Risk<sub>D</sub> = sigmoid(w₁ × f<sub>G</sub> + w₂ × f<sub>T</sub> + w₃ × f<sub>P</sub> + b<sub>D</sub>)
+                    </div>
+                    <p style="margin-top: 12px; color: #555; line-height: 1.7;">
+                        Integrates genomics (G), transcriptomics (T), and proteomics (P) using weighted linear combination with disease-specific gene associations, transformed by sigmoid function to generate risk probability (0-100%).
                     </p>
                 </div>
             </div>
             
-            <!-- Methodology Section -->
+            <!-- Methodology -->
             <div class="section">
                 <h2 class="section-title">
                     <span class="section-icon">🔬</span>
-                    Methodology & Data Processing
+                    Methodology & Biological Context
                 </h2>
                 
-                <p style="line-height: 1.8; margin-bottom: 20px;">
-                    This analysis employed a comprehensive multi-omics approach to model gene regulation and predict disease risk. 
-                    The simulation integrated three key biological layers:
-                </p>
-                
-                <div style="background: #f8f9fa; padding: 25px; border-radius: 10px; margin: 20px 0;">
-                    <h4 style="color: #3498db; margin-bottom: 15px;">1. Genomics Layer</h4>
+                <div style="background: linear-gradient(135deg, #f8f9fa, #e9ecef); padding: 35px; border-radius: 20px; line-height: 1.9; color: #555;">
+                    <h4 style="color: #667eea; margin-bottom: 15px; font-size: 1.3em;">🧪 Multi-Omics Integration Approach</h4>
                     <p style="margin-bottom: 20px;">
-                        Gene expression was modeled using the Hill equation, incorporating transcription factor concentration, 
-                        binding affinity, cooperativity, epigenetic silencing (methylation), and genetic mutations.
+                        This analysis employed a comprehensive systems biology framework to model gene regulation and predict disease risk through integration of three fundamental biological layers:
                     </p>
                     
-                    <h4 style="color: #2ecc71; margin-bottom: 15px;">2. Transcriptomics Layer</h4>
-                    <p style="margin-bottom: 20px;">
-                        mRNA levels were calculated from genomic expression with added stochastic noise to simulate biological 
-                        variability and measurement uncertainty.
-                    </p>
+                    <div style="background: white; padding: 25px; border-radius: 15px; margin: 20px 0; border-left: 5px solid #667eea;">
+                        <h4 style="color: #667eea; margin-bottom: 12px;">1. 🧬 Genomics Layer</h4>
+                        <p>
+                            Gene expression was modeled using the Hill equation, which accurately captures transcription factor-DNA binding kinetics with cooperativity. 
+                            The model incorporates epigenetic modifications (DNA methylation, histone modifications) that silence gene expression and genetic mutations 
+                            that impair gene function, both critical factors in disease development.
+                        </p>
+                    </div>
                     
-                    <h4 style="color: #9b59b6; margin-bottom: 15px;">3. Proteomics Layer</h4>
-                    <p>
-                        Protein abundance was determined using a differential equation model incorporating translation efficiency 
-                        and protein degradation rates, simulated over ${state.simulation.currentTime.toFixed(1)} hours.
+                    <div style="background: white; padding: 25px; border-radius: 15px; margin: 20px 0; border-left: 5px solid #2ecc71;">
+                        <h4 style="color: #2ecc71; margin-bottom: 12px;">2. 📊 Transcriptomics Layer</h4>
+                        <p>
+                            mRNA levels were calculated from genomic expression with added stochastic noise (Gaussian distribution) to simulate the inherent 
+                            biological variability in gene expression and technical measurement uncertainty present in RNA-sequencing experiments.
+                        </p>
+                    </div>
+                    
+                    <div style="background: white; padding: 25px; border-radius: 15px; margin: 20px 0; border-left: 5px solid #9b59b6;">
+                        <h4 style="color: #9b59b6; margin-bottom: 12px;">3. 🔬 Proteomics Layer</h4>
+                        <p>
+                            Protein abundance was determined using a differential equation model that balances protein synthesis (translation) and degradation. 
+                            This dynamic model captures temporal protein dynamics over ${state.simulation.currentTime.toFixed(1)} hours, reflecting the steady-state 
+                            balance between production and clearance that determines cellular protein levels.
+                        </p>
+                    </div>
+                    
+                    <p style="margin-top: 25px;">
+                        <strong>Disease Risk Prediction:</strong> Risk scores were calculated by integrating normalized values from all three omics layers using 
+                        disease-specific gene association weights derived from clinical and experimental literature. The weighted linear combination was transformed 
+                        via a sigmoid function to generate interpretable risk probabilities (0-100%), where higher scores indicate increased disease susceptibility.
                     </p>
                 </div>
+            </div>
+            
+            <!-- Conclusions -->
+            <div class="section">
+                <h2 class="section-title">
+                    <span class="section-icon">💡</span>
+                    Conclusions & Clinical Implications
+                </h2>
                 
-                <p style="line-height: 1.8;">
-                    Disease risk was calculated by integrating normalized values from all three omics layers using 
-                    disease-specific gene association weights and applying a sigmoid transformation to generate 
-                    risk scores from 0-100%.
-                </p>
+                <div class="highlight-box">
+                    <h3>🎯 Summary</h3>
+                    <p style="margin-bottom: 20px;">
+                        This multi-omics analysis successfully integrated genomic, transcriptomic, and proteomic data to generate comprehensive disease risk predictions. 
+                        The simulation captured complex regulatory dynamics including transcription factor binding kinetics, epigenetic modifications, genetic mutations, 
+                        and protein homeostasis.
+                    </p>
+                    <p>
+                        <strong>Clinical Significance:</strong> The predicted risk scores reflect the cumulative impact of molecular alterations across multiple biological 
+                        layers, providing a systems-level understanding of disease susceptibility. This approach can inform personalized medicine strategies by identifying 
+                        high-risk individuals who may benefit from preventive interventions or targeted therapies.
+                    </p>
+                </div>
             </div>
             
         </div>
         
         <!-- Footer -->
         <div class="footer">
-            <div class="footer-content">
-                <p style="font-size: 1.2em; font-weight: 600; margin-bottom: 15px;">
-                    Virtual Multi-Omics Laboratory
-                </p>
-                <p>
-                    Developed by <strong>Shubham Mahindrakar</strong>
-                </p>
-                <p style="font-size: 0.9em; margin-top: 15px;">
-                    © ${new Date().getFullYear()} | For educational and research purposes
-                </p>
-                <p style="font-size: 0.85em; margin-top: 10px; opacity: 0.8;">
-                    This report was automatically generated using realistic biological models for gene regulation and disease prediction.
-                </p>
-            </div>
+            <div class="footer-logo">🧬</div>
+            <h3>Virtual Multi-Omics Laboratory</h3>
+            <div class="footer-divider"></div>
+            <p style="font-size: 1.15em;">
+                Developed by <strong style="color: #667eea;">Shubham Mahindrakar</strong>
+            </p>
+            <p>Advanced Bioinformatics & Computational Biology Research Platform</p>
+            <p style="font-size: 0.9em; margin-top: 20px; opacity: 0.8;">
+                © ${new Date().getFullYear()} | For Educational and Research Purposes
+            </p>
+            <p style="font-size: 0.85em; margin-top: 10px; opacity: 0.7;">
+                This report was automatically generated using realistic biological models and comprehensive multi-omics data integration
+            </p>
         </div>
     </div>
 </body>
 </html>
     `;
 }
+
+
 
 
 /**
@@ -2772,4 +3504,5 @@ if (document.readyState === 'loading') {
 // =============================================================================
 // END OF SCRIPT
 // =============================================================================
+
 
