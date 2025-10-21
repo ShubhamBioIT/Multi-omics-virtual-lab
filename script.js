@@ -1080,6 +1080,29 @@ async function exportHTMLReport() {
 
 
 /**
+ * Detect which scenario is currently applied
+ */
+function detectAppliedScenario() {
+    for (const [key, scenario] of Object.entries(DETAILED_SCENARIOS)) {
+        // Check if genes match
+        const genesMatch = scenario.selectedGenes.length === state.selectedGenes.length &&
+            scenario.selectedGenes.every(symbol => 
+                state.selectedGenes.some(g => g.symbol === symbol)
+            );
+        
+        // Check if parameters are close
+        const paramsMatch = Math.abs(state.params.tfConcentration - scenario.params.tfConcentration) < 10 &&
+            Math.abs(state.params.mutationSeverity - scenario.params.mutationSeverity) < 0.1;
+        
+        if (genesMatch && paramsMatch) {
+            return scenario;
+        }
+    }
+    return null;
+}
+
+
+/**
  * Generate complete HTML report content with enhanced styling
  */
 function generateHTMLReport(chartImages) {
@@ -3504,5 +3527,6 @@ if (document.readyState === 'loading') {
 // =============================================================================
 // END OF SCRIPT
 // =============================================================================
+
 
 
