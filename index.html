@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Interactive Virtual Multi-Omics Gene Regulation and Disease Prediction Laboratory with realistic biological models">
+    <meta name="author" content="Shubham Mahindrakar">
+    <title>Virtual Multi-Omics Gene Regulation & Disease Prediction Lab</title>
+    
+    <!-- Google Fonts - Poppins for modern, clean typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+    
+    <!-- Chart.js CDN - Version 4.4.4 -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.js"></script>
+    
+    <!-- Add html2canvas for capturing charts as images -->
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+
+    <!-- Custom Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    
+    <!-- Tutorial Overlay - Step-by-step guided learning experience -->
+    <div id="tutorial-overlay" class="tutorial-overlay hidden">
+        <div class="tutorial-content">
+            <div class="tutorial-header">
+                <h2 id="tutorial-title">Welcome to the Virtual Multi-Omics Lab</h2>
+                <button id="tutorial-close" class="tutorial-close" aria-label="Close tutorial">&times;</button>
+            </div>
+            <div class="tutorial-body">
+                <p id="tutorial-text">Loading tutorial...</p>
+                <div class="tutorial-progress">
+                    <div class="tutorial-progress-bar" id="tutorial-progress-bar"></div>
+                </div>
+                <div class="tutorial-step-indicator">
+                    <span id="tutorial-step-current">1</span> / <span id="tutorial-step-total">6</span>
+                </div>
+            </div>
+            <div class="tutorial-footer">
+                <button id="tutorial-prev" class="btn btn-secondary">Previous</button>
+                <button id="tutorial-skip" class="btn btn-outline">Skip Tutorial</button>
+                <button id="tutorial-next" class="btn btn-primary">Next</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Header Section -->
+    <header class="header" role="banner">
+        <div class="container">
+            <div class="header-content">
+                <h1 class="header-title">
+                    <span class="header-icon">🧬</span>
+                    Virtual Multi-Omics Laboratory
+                </h1>
+                <p class="header-subtitle">Gene Regulation & Disease Prediction Simulator</p>
+                <p class="header-description">
+                    Explore how transcription factors, epigenetic modifications, and mutations regulate gene expression across genomics, 
+                    transcriptomics, and proteomics layers to predict disease risk using realistic biological models
+                </p>
+            </div>
+            <div class="header-actions">
+                <button id="start-tutorial-btn" class="btn btn-light" aria-label="Start interactive tutorial">
+                    📚 Start Tutorial
+                </button>
+                <button id="reset-all-btn" class="btn btn-outline-light" aria-label="Reset all parameters to defaults">
+                    🔄 Reset All
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Application Container -->
+    <main class="main-container" role="main">
+        <div class="container">
+            <div class="app-layout">
+                
+                <!-- Left Sidebar: Control Panel -->
+                <aside class="control-sidebar" role="complementary" aria-label="Control panel">
+                    
+                    <!-- Gene Selection Panel -->
+                    <section class="control-section" id="gene-selection-section">
+                        <h2 class="section-title">
+                            <span class="section-icon">🧬</span>
+                            Gene Selection
+                        </h2>
+                        <div class="section-content">
+                            <p class="help-text">Select one or more genes to analyze. Each gene has unique baseline expression and disease associations.</p>
+                            
+                            <div class="gene-search-box">
+                                <input type="text" id="gene-search" placeholder="Search genes..." aria-label="Search genes">
+                                <span class="search-icon">🔍</span>
+                            </div>
+                            
+                            <div class="gene-list" id="gene-list" role="listbox" aria-label="Available genes">
+                                <!-- Dynamically populated by JavaScript -->
+                            </div>
+                            
+                            <div class="gene-panel-actions">
+                                <button id="select-all-genes" class="btn btn-sm btn-secondary">Select All</button>
+                                <button id="clear-genes" class="btn btn-sm btn-outline">Clear All</button>
+                                <button id="save-panel" class="btn btn-sm btn-primary">Save Panel</button>
+                            </div>
+                            
+                            <div class="selected-genes-summary">
+                                <strong>Selected:</strong> <span id="selected-gene-count">0</span> gene(s)
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Disease Selection Panel -->
+                    <section class="control-section" id="disease-selection-section">
+                        <h2 class="section-title">
+                            <span class="section-icon">⚕️</span>
+                            Disease Selection
+                        </h2>
+                        <div class="section-content">
+                            <p class="help-text">Select diseases to predict risk based on multi-omics integration. Each disease has specific gene associations.</p>
+                            
+                            <div class="disease-list" id="disease-list" role="listbox" aria-label="Available diseases">
+                                <!-- Dynamically populated by JavaScript -->
+                            </div>
+                            
+                            <div class="selected-diseases-summary">
+                                <strong>Selected:</strong> <span id="selected-disease-count">0</span> disease(s)
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Scenario Presets Panel -->
+                    <section class="control-section" id="presets-section">
+                        <h2 class="section-title">
+                            <span class="section-icon">⚙️</span>
+                            Scenario Presets
+                        </h2>
+                        <div class="section-content">
+                            <p class="help-text">Load predefined scenarios to quickly explore different biological conditions.</p>
+                            
+                            <select id="preset-selector" class="preset-selector" aria-label="Select scenario preset">
+                                <option value="">-- Select a Preset --</option>
+                                <option value="healthy">Healthy State (Normal Expression)</option>
+                                <option value="high-risk">High Disease Risk (Multiple Mutations)</option>
+                                <option value="drug-treated">Drug Treatment (Enhanced Translation)</option>
+                                <option value="epigenetic-silenced">Epigenetic Silencing (High Methylation)</option>
+                                <option value="tf-overexpression">TF Overexpression (Cancer Model)</option>
+                            </select>
+                            
+                            <div class="preset-actions">
+                                <button id="load-preset-btn" class="btn btn-sm btn-primary">Load Preset</button>
+                                <button id="randomize-btn" class="btn btn-sm btn-secondary">🎲 Randomize</button>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Simulation Parameters Panel -->
+                    <section class="control-section" id="parameters-section">
+                        <h2 class="section-title">
+                            <span class="section-icon">🔬</span>
+                            Simulation Parameters
+                        </h2>
+                        <div class="section-content">
+                            
+                            <!-- Transcription Factor Section -->
+                            <div class="parameter-group">
+                                <h3 class="parameter-group-title">Transcription Factor Binding</h3>
+                                
+                                <div class="parameter-item">
+                                    <label for="tf-concentration" class="parameter-label">
+                                        <span class="label-text">TF Concentration</span>
+                                        <span class="tooltip" data-tooltip="Concentration of transcription factor in nanomolar (nM). Higher values increase gene activation.">ℹ️</span>
+                                    </label>
+                                    <div class="input-group">
+                                        <input type="range" id="tf-concentration" min="0" max="1000" step="1" value="50" aria-label="TF concentration slider">
+                                        <input type="number" id="tf-concentration-num" min="0" max="1000" step="1" value="50" aria-label="TF concentration value">
+                                        <span class="unit-label">nM</span>
+                                    </div>
+                                </div>
+
+                                <div class="parameter-item">
+                                    <label for="binding-affinity" class="parameter-label">
+                                        <span class="label-text">Binding Affinity (Kd)</span>
+                                        <span class="tooltip" data-tooltip="Dissociation constant in micromolar (µM). Lower Kd = stronger TF-DNA binding. Typical range: 0.01-10 µM.">ℹ️</span>
+                                    </label>
+                                    <div class="input-group">
+                                        <input type="range" id="binding-affinity" min="0.001" max="100" step="0.01" value="1" aria-label="Binding affinity slider">
+                                        <input type="number" id="binding-affinity-num" min="0.001" max="100" step="0.01" value="1" aria-label="Binding affinity value">
+                                        <span class="unit-label">µM</span>
+                                    </div>
+                                </div>
+
+                                <div class="parameter-item">
+                                    <label for="hill-coefficient" class="parameter-label">
+                                        <span class="label-text">Hill Coefficient (n)</span>
+                                        <span class="tooltip" data-tooltip="Cooperativity of TF binding. n=1: no cooperativity, n>1: positive cooperativity (sigmoidal response).">ℹ️</span>
+                                    </label>
+                                    <div class="input-group">
+                                        <input type="range" id="hill-coefficient" min="1" max="4" step="1" value="2" aria-label="Hill coefficient slider">
+                                        <input type="number" id="hill-coefficient-num" min="1" max="4" step="1" value="2" aria-label="Hill coefficient value">
+                                        <span class="unit-label">—</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Epigenetic & Genetic Factors -->
+                            <div class="parameter-group">
+                                <h3 class="parameter-group-title">Epigenetic & Genetic Regulation</h3>
+                                
+                                <div class="parameter-item">
+                                    <label for="methylation-factor" class="parameter-label">
+                                        <span class="label-text">Methylation/Silencing</span>
+                                        <span class="tooltip" data-tooltip="DNA methylation or histone modification factor (0-1). Higher values reduce gene expression (epigenetic silencing).">ℹ️</span>
+                                    </label>
+                                    <div class="input-group">
+                                        <input type="range" id="methylation-factor" min="0" max="1" step="0.01" value="0" aria-label="Methylation factor slider">
+                                        <input type="number" id="methylation-factor-num" min="0" max="1" step="0.01" value="0" aria-label="Methylation factor value">
+                                        <span class="unit-label">—</span>
+                                    </div>
+                                </div>
+
+                                <div class="parameter-item">
+                                    <label for="mutation-severity" class="parameter-label">
+                                        <span class="label-text">Mutation Severity</span>
+                                        <span class="tooltip" data-tooltip="Impact of genetic mutations on gene function (0-1). 0=wild-type, 1=complete loss-of-function.">ℹ️</span>
+                                    </label>
+                                    <div class="input-group">
+                                        <input type="range" id="mutation-severity" min="0" max="1" step="0.01" value="0" aria-label="Mutation severity slider">
+                                        <input type="number" id="mutation-severity-num" min="0" max="1" step="0.01" value="0" aria-label="Mutation severity value">
+                                        <span class="unit-label">—</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Translation & Protein Dynamics -->
+                            <div class="parameter-group">
+                                <h3 class="parameter-group-title">Translation & Protein Dynamics</h3>
+                                
+                                <div class="parameter-item">
+                                    <label for="translation-efficiency" class="parameter-label">
+                                        <span class="label-text">Translation Efficiency (η)</span>
+                                        <span class="tooltip" data-tooltip="Rate of protein synthesis from mRNA (dimensionless multiplier). Typical range: 0.1-2.0. Drug treatments can increase this.">ℹ️</span>
+                                    </label>
+                                    <div class="input-group">
+                                        <input type="range" id="translation-efficiency" min="0" max="5" step="0.1" value="0.7" aria-label="Translation efficiency slider">
+                                        <input type="number" id="translation-efficiency-num" min="0" max="5" step="0.1" value="0.7" aria-label="Translation efficiency value">
+                                        <span class="unit-label">—</span>
+                                    </div>
+                                </div>
+
+                                <div class="parameter-item">
+                                    <label for="protein-degradation" class="parameter-label">
+                                        <span class="label-text">Protein Degradation Rate</span>
+                                        <span class="tooltip" data-tooltip="Rate of protein breakdown (per time unit). Higher values lead to faster protein turnover and lower steady-state levels.">ℹ️</span>
+                                    </label>
+                                    <div class="input-group">
+                                        <input type="range" id="protein-degradation" min="0" max="1" step="0.01" value="0.1" aria-label="Protein degradation slider">
+                                        <input type="number" id="protein-degradation-num" min="0" max="1" step="0.01" value="0.1" aria-label="Protein degradation value">
+                                        <span class="unit-label">t⁻¹</span>
+                                    </div>
+                                </div>
+
+                                <div class="parameter-item">
+                                    <label for="expression-noise" class="parameter-label">
+                                        <span class="label-text">Expression Noise</span>
+                                        <span class="tooltip" data-tooltip="Stochastic variability in gene expression (0-0.5). Represents biological noise and measurement uncertainty.">ℹ️</span>
+                                    </label>
+                                    <div class="input-group">
+                                        <input type="range" id="expression-noise" min="0" max="0.5" step="0.01" value="0.1" aria-label="Expression noise slider">
+                                        <input type="number" id="expression-noise-num" min="0" max="0.5" step="0.01" value="0.1" aria-label="Expression noise value">
+                                        <span class="unit-label">—</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Multi-Omics Integration Weights -->
+                            <div class="parameter-group">
+                                <h3 class="parameter-group-title">Multi-Omics Integration Weights</h3>
+                                <p class="help-text small">These weights determine the relative contribution of each omics layer to disease risk. They are automatically normalized to sum = 1.</p>
+                                
+                                <div class="parameter-item">
+                                    <label for="weight-genomics" class="parameter-label">
+                                        <span class="label-text">Genomics Weight (w₁)</span>
+                                        <span class="tooltip" data-tooltip="Contribution of genomic data (gene variants, CNVs) to disease risk prediction.">ℹ️</span>
+                                    </label>
+                                    <div class="input-group">
+                                        <input type="range" id="weight-genomics" min="0" max="1" step="0.01" value="0.3" aria-label="Genomics weight slider">
+                                        <input type="number" id="weight-genomics-num" min="0" max="1" step="0.01" value="0.3" aria-label="Genomics weight value">
+                                        <span class="unit-label">—</span>
+                                    </div>
+                                </div>
+
+                                <div class="parameter-item">
+                                    <label for="weight-transcriptomics" class="parameter-label">
+                                        <span class="label-text">Transcriptomics Weight (w₂)</span>
+                                        <span class="tooltip" data-tooltip="Contribution of transcriptomic data (mRNA expression levels) to disease risk prediction.">ℹ️</span>
+                                    </label>
+                                    <div class="input-group">
+                                        <input type="range" id="weight-transcriptomics" min="0" max="1" step="0.01" value="0.4" aria-label="Transcriptomics weight slider">
+                                        <input type="number" id="weight-transcriptomics-num" min="0" max="1" step="0.01" value="0.4" aria-label="Transcriptomics weight value">
+                                        <span class="unit-label">—</span>
+                                    </div>
+                                </div>
+
+                                <div class="parameter-item">
+                                    <label for="weight-proteomics" class="parameter-label">
+                                        <span class="label-text">Proteomics Weight (w₃)</span>
+                                        <span class="tooltip" data-tooltip="Contribution of proteomic data (protein abundance) to disease risk prediction.">ℹ️</span>
+                                    </label>
+                                    <div class="input-group">
+                                        <input type="range" id="weight-proteomics" min="0" max="1" step="0.01" value="0.3" aria-label="Proteomics weight slider">
+                                        <input type="number" id="weight-proteomics-num" min="0" max="1" step="0.01" value="0.3" aria-label="Proteomics weight value">
+                                        <span class="unit-label">—</span>
+                                    </div>
+                                </div>
+
+                                <div class="weight-normalized-display">
+                                    <strong>Normalized weights:</strong>
+                                    <div class="weight-breakdown">
+                                        <span>w₁: <span id="norm-w1">0.30</span></span>
+                                        <span>w₂: <span id="norm-w2">0.40</span></span>
+                                        <span>w₃: <span id="norm-w3">0.30</span></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Simulation Time Controls -->
+                            <div class="parameter-group">
+                                <h3 class="parameter-group-title">Time-Series Simulation</h3>
+                                
+                                <div class="simulation-controls">
+                                    <button id="run-simulation-btn" class="btn btn-primary btn-large">
+                                        ▶️ Run Simulation
+                                    </button>
+                                    <button id="pause-simulation-btn" class="btn btn-secondary btn-large hidden">
+                                        ⏸️ Pause
+                                    </button>
+                                    <button id="reset-simulation-btn" class="btn btn-outline btn-large">
+                                        🔄 Reset Time
+                                    </button>
+                                </div>
+                                
+                                <div class="simulation-time-display">
+                                    <strong>Simulation Time:</strong> <span id="sim-time-display">0.0</span> <span class="unit-label">hours</span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </section>
+
+                    <!-- Data Import/Export Panel -->
+                    <section class="control-section" id="data-section">
+                        <h2 class="section-title">
+                            <span class="section-icon">💾</span>
+                            Data Management
+                        </h2>
+                        <div class="section-content">
+                            <div class="data-actions">
+                                <label for="import-data" class="btn btn-sm btn-secondary file-label">
+                                    📥 Import Custom Data
+                                    <input type="file" id="import-data" accept=".json,.csv" hidden aria-label="Import custom gene data">
+                                </label>
+                                <button id="export-data-btn" class="btn btn-sm btn-primary">📤 Export Results</button>
+                                <button id="export-html-btn" class="btn btn-sm btn-primary">📄 Export HTML Report</button>
+                                <button id="save-scenario-btn" class="btn btn-sm btn-outline">💾 Save Scenario</button>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Mathematical Model Documentation -->
+                    <section class="control-section collapsible" id="math-model-section">
+                        <h2 class="section-title collapsible-header" id="math-model-header">
+                            <span class="section-icon">📐</span>
+                            Mathematical Model
+                            <span class="collapse-icon">▼</span>
+                        </h2>
+                        <div class="section-content collapsible-content" id="math-model-content">
+                            <div class="math-documentation">
+                                <h4>Gene Expression (Hill Equation):</h4>
+                                <div class="formula">
+                                    E<sub>gene</sub> = V<sub>max</sub> × [TF]<sup>n</sup> / (K<sub>d</sub><sup>n</sup> + [TF]<sup>n</sup>) × (1 - methylation) × (1 - mutation)
+                                </div>
+                                
+                                <h4>Transcriptomics (with stochastic noise):</h4>
+                                <div class="formula">
+                                    T = E<sub>gene</sub> × (1 + ε), where ε ~ N(0, noise)
+                                </div>
+                                
+                                <h4>Protein Dynamics (differential equation):</h4>
+                                <div class="formula">
+                                    dP/dt = η × T - δ × P
+                                </div>
+                                <p class="help-text small">where η = translation efficiency, δ = degradation rate</p>
+                                
+                                <h4>Disease Risk (sigmoid model):</h4>
+                                <div class="formula">
+                                    Risk<sub>D</sub> = sigmoid(w₁ × f<sub>G</sub> + w₂ × f<sub>T</sub> + w₃ × f<sub>P</sub> + b<sub>D</sub>)
+                                </div>
+                                <p class="help-text small">f = normalized linear combination of gene values weighted by disease-specific associations</p>
+                            </div>
+                        </div>
+                    </section>
+
+                </aside>
+
+                <!-- Main Content Area: Visualizations -->
+                <div class="main-content-area" role="main">
+                    
+                    <!-- Multi-Omics Flow Diagram -->
+                    <section class="viz-section flow-section">
+                        <h2 class="viz-section-title">Multi-Omics Data Flow</h2>
+                        <div class="flow-diagram-container">
+                            <div class="flow-step" id="flow-genomics">
+                                <div class="flow-icon">🧬</div>
+                                <div class="flow-label">Genomics</div>
+                                <div class="flow-value">0.0</div>
+                                <div class="flow-unit">TPM</div>
+                            </div>
+                            <div class="flow-arrow animated">→</div>
+                            <div class="flow-step" id="flow-transcriptomics">
+                                <div class="flow-icon">📊</div>
+                                <div class="flow-label">Transcriptomics</div>
+                                <div class="flow-value">0.0</div>
+                                <div class="flow-unit">TPM</div>
+                            </div>
+                            <div class="flow-arrow animated">→</div>
+                            <div class="flow-step" id="flow-proteomics">
+                                <div class="flow-icon">🔬</div>
+                                <div class="flow-label">Proteomics</div>
+                                <div class="flow-value">0.0</div>
+                                <div class="flow-unit">AU</div>
+                            </div>
+                            <div class="flow-arrow animated">→</div>
+                            <div class="flow-step highlight" id="flow-disease">
+                                <div class="flow-icon">⚕️</div>
+                                <div class="flow-label">Disease Risk</div>
+                                <div class="flow-value">0%</div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Disease Risk Dashboard -->
+                    <section class="viz-section" id="disease-risk-section">
+                        <h2 class="viz-section-title">Disease Risk Dashboard</h2>
+                        <div class="disease-cards-container" id="disease-cards-container">
+                            <div class="empty-state">
+                                <p>Select diseases from the control panel to view risk predictions</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Time-Series Charts -->
+                    <section class="viz-section">
+                        <h2 class="viz-section-title">Gene Expression Time Series</h2>
+                        <div class="chart-card">
+                            <div class="chart-header">
+                                <h3 class="chart-title">mRNA Expression Levels (TPM)</h3>
+                                <div class="chart-legend" id="mrna-legend"></div>
+                            </div>
+                            <div class="chart-container">
+                                <canvas id="mrna-chart" aria-label="mRNA expression time series chart"></canvas>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="viz-section">
+                        <h2 class="viz-section-title">Protein Abundance Time Series</h2>
+                        <div class="chart-card">
+                            <div class="chart-header">
+                                <h3 class="chart-title">Protein Levels (Arbitrary Units)</h3>
+                                <div class="chart-legend" id="protein-legend"></div>
+                            </div>
+                            <div class="chart-container">
+                                <canvas id="protein-chart" aria-label="Protein abundance time series chart"></canvas>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Multi-Omics Contribution Chart -->
+                    <section class="viz-section">
+                        <h2 class="viz-section-title">Disease Risk Contribution Analysis</h2>
+                        <div class="chart-card">
+                            <div class="chart-header">
+                                <h3 class="chart-title">Per-Gene Contribution to Disease Risk (Stacked)</h3>
+                            </div>
+                            <div class="chart-container">
+                                <canvas id="contribution-chart" aria-label="Gene contribution stacked bar chart"></canvas>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- What Changed Panel -->
+                    <section class="viz-section" id="what-changed-section">
+                        <h2 class="viz-section-title">Parameter Impact Analysis</h2>
+                        <div class="what-changed-card">
+                            <div class="what-changed-content" id="what-changed-content">
+                                <p class="empty-state">Adjust parameters and run simulation to see impact analysis</p>
+                            </div>
+                        </div>
+                    </section>
+
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer Section -->
+    <footer class="footer" role="contentinfo">
+        <div class="container">
+            <div class="footer-content">
+                <p class="footer-credit">
+                    Developed by <strong>Shubham Mahindrakar</strong>
+                </p>
+                <p class="footer-description">
+                    Virtual Multi-Omics Laboratory | Realistic biological modeling for gene regulation and disease prediction
+                </p>
+                <p class="footer-copyright">
+                    &copy; 2025 All Rights Reserved. For educational and research purposes.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Custom JavaScript -->
+    <script src="script.js"></script>
+</body>
+</html>
