@@ -1548,6 +1548,352 @@ input[type="number"]:focus {
 }
 
 /* =============================================================================
+   Scenario Showcase Section
+   ============================================================================= */
+
+.scenario-showcase {
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    padding: var(--space-3xl) var(--space-lg);
+    margin-bottom: var(--space-xl);
+}
+
+.showcase-title {
+    font-size: var(--font-size-3xl);
+    color: var(--text-primary);
+    text-align: center;
+    margin-bottom: var(--space-sm);
+    font-weight: var(--font-weight-bold);
+}
+
+.showcase-subtitle {
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: var(--font-size-lg);
+    margin-bottom: var(--space-2xl);
+}
+
+.scenario-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--space-xl);
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.scenario-card {
+    background: white;
+    border-radius: var(--radius-lg);
+    padding: var(--space-xl);
+    box-shadow: var(--shadow-md);
+    cursor: pointer;
+    transition: all var(--transition-base);
+    border: 3px solid transparent;
+    position: relative;
+    overflow: hidden;
+}
+
+.scenario-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+    background: linear-gradient(90deg, var(--primary-color), var(--primary-light));
+    transform: scaleX(0);
+    transition: transform var(--transition-base);
+}
+
+.scenario-card:hover::before {
+    transform: scaleX(1);
+}
+
+.scenario-card:hover {
+    transform: translateY(-10px);
+    box-shadow: var(--shadow-xl);
+    border-color: var(--primary-color);
+}
+
+.scenario-card-icon {
+    font-size: 3.5rem;
+    text-align: center;
+    margin-bottom: var(--space-md);
+}
+
+.scenario-card-title {
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-semibold);
+    color: var(--text-primary);
+    margin-bottom: var(--space-sm);
+    text-align: center;
+}
+
+.scenario-card-description {
+    font-size: var(--font-size-sm);
+    color: var(--text-secondary);
+    text-align: center;
+    margin-bottom: var(--space-lg);
+    line-height: var(--line-height-relaxed);
+    min-height: 50px;
+}
+
+.scenario-card-badge {
+    display: inline-block;
+    padding: var(--space-xs) var(--space-md);
+    border-radius: var(--radius-full);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+    margin: var(--space-md) auto;
+    text-align: center;
+    width: 100%;
+}
+
+.scenario-card-badge.low {
+    background-color: rgba(39, 174, 96, 0.15);
+    color: var(--success-color);
+}
+
+.scenario-card-badge.moderate {
+    background-color: rgba(243, 156, 18, 0.15);
+    color: var(--warning-color);
+}
+
+.scenario-card-badge.high {
+    background-color: rgba(231, 76, 60, 0.15);
+    color: var(--danger-color);
+}
+
+.scenario-card-footer {
+    text-align: center;
+    color: var(--primary-color);
+    font-weight: var(--font-weight-medium);
+    margin-top: var(--space-md);
+    font-size: var(--font-size-sm);
+}
+
+/* Scenario Modal */
+.scenario-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: var(--z-modal);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-lg);
+}
+
+.scenario-modal.hidden {
+    display: none;
+}
+
+.scenario-modal-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(5px);
+    animation: fadeIn var(--transition-base);
+}
+
+.scenario-modal-content {
+    position: relative;
+    background: white;
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-xl);
+    max-width: 700px;
+    width: 100%;
+    max-height: 85vh;
+    overflow-y: auto;
+    animation: slideUp var(--transition-base);
+    z-index: 1;
+}
+
+.scenario-modal-close {
+    position: absolute;
+    top: var(--space-lg);
+    right: var(--space-lg);
+    background: none;
+    border: none;
+    font-size: 2.5rem;
+    color: var(--text-tertiary);
+    cursor: pointer;
+    line-height: 1;
+    transition: var(--transition-fast);
+    z-index: 10;
+}
+
+.scenario-modal-close:hover {
+    color: var(--danger-color);
+    transform: rotate(90deg);
+}
+
+.scenario-modal-body {
+    padding: var(--space-3xl);
+}
+
+.modal-header {
+    text-align: center;
+    margin-bottom: var(--space-xl);
+}
+
+.modal-icon {
+    font-size: 4rem;
+    margin-bottom: var(--space-md);
+}
+
+.modal-title {
+    font-size: var(--font-size-3xl);
+    color: var(--text-primary);
+    margin-bottom: var(--space-sm);
+    font-weight: var(--font-weight-bold);
+}
+
+.modal-risk-badge {
+    display: inline-block;
+    padding: var(--space-sm) var(--space-xl);
+    border-radius: var(--radius-full);
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-semibold);
+    margin-top: var(--space-sm);
+}
+
+.modal-description {
+    font-size: var(--font-size-base);
+    color: var(--text-secondary);
+    line-height: var(--line-height-relaxed);
+    margin-bottom: var(--space-xl);
+    padding: var(--space-lg);
+    background: var(--background-secondary);
+    border-radius: var(--radius-md);
+    border-left: 4px solid var(--primary-color);
+}
+
+.modal-section {
+    margin-bottom: var(--space-xl);
+}
+
+.modal-section-title {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+    color: var(--primary-color);
+    margin-bottom: var(--space-md);
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+}
+
+.modal-genes-list, .modal-diseases-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-md);
+}
+
+.modal-gene-badge, .modal-disease-badge {
+    padding: var(--space-xs) var(--space-md);
+    background: var(--primary-color);
+    color: white;
+    border-radius: var(--radius-full);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+}
+
+.modal-disease-badge {
+    background: var(--accent-color);
+}
+
+.modal-params-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-sm);
+    margin-bottom: var(--space-xl);
+}
+
+.modal-param-item {
+    padding: var(--space-sm);
+    background: var(--background-secondary);
+    border-radius: var(--radius-sm);
+    font-size: var(--font-size-xs);
+}
+
+.modal-param-name {
+    color: var(--text-secondary);
+    margin-bottom: var(--space-xs);
+}
+
+.modal-param-value {
+    color: var(--text-primary);
+    font-weight: var(--font-weight-semibold);
+    font-family: var(--font-family-mono);
+}
+
+.modal-actions {
+    display: flex;
+    gap: var(--space-md);
+    justify-content: center;
+    margin-top: var(--space-xl);
+}
+
+.btn-try-scenario {
+    padding: var(--space-md) var(--space-2xl);
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+    color: white;
+    border: none;
+    border-radius: var(--radius-md);
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+    cursor: pointer;
+    transition: var(--transition-base);
+    box-shadow: var(--shadow-md);
+}
+
+.btn-try-scenario:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+.btn-cancel {
+    padding: var(--space-md) var(--space-xl);
+    background: transparent;
+    color: var(--text-secondary);
+    border: 2px solid var(--border-color);
+    border-radius: var(--radius-md);
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-medium);
+    cursor: pointer;
+    transition: var(--transition-base);
+}
+
+.btn-cancel:hover {
+    border-color: var(--text-primary);
+    color: var(--text-primary);
+}
+
+@media (max-width: 768px) {
+    .scenario-cards-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .modal-params-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .scenario-modal-content {
+        max-height: 95vh;
+    }
+    
+    .scenario-modal-body {
+        padding: var(--space-xl);
+    }
+}
+
+
+/* =============================================================================
    17. ACCESSIBILITY ENHANCEMENTS
    ============================================================================= */
 
@@ -1582,3 +1928,4 @@ input[type="number"]:focus {
 /* =============================================================================
    END OF STYLESHEET
    ============================================================================= */
+
