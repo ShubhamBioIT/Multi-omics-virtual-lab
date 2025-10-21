@@ -2167,7 +2167,7 @@ function generateHTMLReport(chartImages) {
             <h3>Virtual Multi-Omics Laboratory</h3>
             <div class="footer-divider"></div>
             <p style="font-size: 1.15em;">
-                Developed by <strong style="color: #667eea;">Shubham Mahindrakar</strong>
+                Developed by <strong style="color: #667eea;">MMBS TEAM</strong>
             </p>
             <p>Advanced Bioinformatics & Computational Biology Research Platform</p>
             <p style="font-size: 0.9em; margin-top: 20px; opacity: 0.8;">
@@ -3541,6 +3541,7 @@ if (document.readyState === 'loading') {
 // =============================================================================
 // END OF SCRIPT
 // =============================================================================
+
 
 
 
