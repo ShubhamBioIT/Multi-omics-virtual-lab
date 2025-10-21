@@ -154,7 +154,7 @@ const DISEASE_DATABASE = [
             'VEGFA': 0.6,
             'MYC': 0.8
         },
-        bias: -2.5
+        bias: -1.5  // CHANGED from -2.5 to -1.5
     },
     {
         name: 'Alzheimer\'s Disease',
@@ -171,7 +171,7 @@ const DISEASE_DATABASE = [
             'VEGFA': 0.3,
             'MYC': 0.1
         },
-        bias: -3.0
+        bias: -1.8  // CHANGED from -3.0 to -1.8
     },
     {
         name: 'Type 2 Diabetes',
@@ -188,7 +188,7 @@ const DISEASE_DATABASE = [
             'VEGFA': 0.4,
             'MYC': 0.2
         },
-        bias: -2.8
+        bias: -1.6  // CHANGED from -2.8 to -1.6
     },
     {
         name: 'Chronic Inflammation',
@@ -205,7 +205,7 @@ const DISEASE_DATABASE = [
             'VEGFA': 0.5,
             'MYC': 0.4
         },
-        bias: -2.2
+        bias: -1.2  // CHANGED from -2.2 to -1.2
     },
     {
         name: 'Cardiovascular Disease',
@@ -222,7 +222,7 @@ const DISEASE_DATABASE = [
             'VEGFA': 0.8,
             'MYC': 0.3
         },
-        bias: -2.6
+        bias: -1.4  // CHANGED from -2.6 to -1.4
     },
     {
         name: 'Lung Cancer',
@@ -239,7 +239,7 @@ const DISEASE_DATABASE = [
             'VEGFA': 0.7,
             'MYC': 0.8
         },
-        bias: -2.7
+        bias: -1.3  // CHANGED from -2.7 to -1.3
     }
 ];
 
@@ -253,9 +253,6 @@ const SIMULATION_CONFIG = {
     chartMaxPoints: 200
 };
 
-/**
- * Preset Scenarios
- */
 const PRESET_SCENARIOS = {
     healthy: {
         name: 'Healthy State',
@@ -276,14 +273,14 @@ const PRESET_SCENARIOS = {
     'high-risk': {
         name: 'High Disease Risk',
         params: {
-            tfConcentration: 150,
-            bindingAffinity: 0.5,
+            tfConcentration: 300,      // INCREASED from 150
+            bindingAffinity: 0.2,      // DECREASED from 0.5 (stronger binding)
             hillCoefficient: 3,
-            methylationFactor: 0.3,
-            mutationSeverity: 0.6,
-            translationEfficiency: 0.4,
-            proteinDegradation: 0.3,
-            expressionNoise: 0.2,
+            methylationFactor: 0.5,    // INCREASED from 0.3
+            mutationSeverity: 0.8,     // INCREASED from 0.6
+            translationEfficiency: 0.3, // DECREASED from 0.4
+            proteinDegradation: 0.4,   // INCREASED from 0.3
+            expressionNoise: 0.3,      // INCREASED from 0.2
             weightGenomics: 0.4,
             weightTranscriptomics: 0.3,
             weightProteomics: 0.3
@@ -295,9 +292,9 @@ const PRESET_SCENARIOS = {
             tfConcentration: 30,
             bindingAffinity: 2,
             hillCoefficient: 2,
-            methylationFactor: 0.1,
-            mutationSeverity: 0.2,
-            translationEfficiency: 1.5,
+            methylationFactor: 0.05,   // DECREASED from 0.1
+            mutationSeverity: 0.1,     // DECREASED from 0.2
+            translationEfficiency: 2.0, // INCREASED from 1.5
             proteinDegradation: 0.05,
             expressionNoise: 0.08,
             weightGenomics: 0.3,
@@ -311,33 +308,34 @@ const PRESET_SCENARIOS = {
             tfConcentration: 80,
             bindingAffinity: 1,
             hillCoefficient: 2,
-            methylationFactor: 0.7,
-            mutationSeverity: 0.1,
-            translationEfficiency: 0.6,
-            proteinDegradation: 0.15,
-            expressionNoise: 0.1,
-            weightGenomics: 0.5,
-            weightTranscriptomics: 0.3,
-            weightProteomics: 0.2
+            methylationFactor: 0.9,    // INCREASED from 0.7
+            mutationSeverity: 0.3,     // INCREASED from 0.1
+            translationEfficiency: 0.4, // DECREASED from 0.6
+            proteinDegradation: 0.25,  // INCREASED from 0.15
+            expressionNoise: 0.2,      // INCREASED from 0.1
+            weightGenomics: 0.6,       // INCREASED from 0.5
+            weightTranscriptomics: 0.25, // DECREASED from 0.3
+            weightProteomics: 0.15     // DECREASED from 0.2
         }
     },
     'tf-overexpression': {
         name: 'TF Overexpression (Cancer Model)',
         params: {
-            tfConcentration: 500,
-            bindingAffinity: 0.3,
-            hillCoefficient: 3,
+            tfConcentration: 800,      // INCREASED from 500
+            bindingAffinity: 0.1,      // DECREASED from 0.3
+            hillCoefficient: 4,        // INCREASED from 3
             methylationFactor: 0.0,
-            mutationSeverity: 0.4,
-            translationEfficiency: 0.9,
-            proteinDegradation: 0.05,
-            expressionNoise: 0.15,
+            mutationSeverity: 0.6,     // INCREASED from 0.4
+            translationEfficiency: 1.2, // INCREASED from 0.9
+            proteinDegradation: 0.03,  // DECREASED from 0.05
+            expressionNoise: 0.2,      // INCREASED from 0.15
             weightGenomics: 0.3,
             weightTranscriptomics: 0.3,
             weightProteomics: 0.4
         }
     }
 };
+
 
 /**
  * Tutorial Steps
@@ -467,7 +465,7 @@ function updateProteinLevel(currentP, T, eta, degradation, dt) {
 function calculateDiseaseRisk(geneValues, disease, w1, w2, w3) {
     // Normalize weights
     const totalWeight = w1 + w2 + w3;
-    if (totalWeight === 0) return 0;
+    if (totalWeight === 0) return { risk: 0, contributions: { genomic: 0, transcriptomic: 0, proteomic: 0 } };
     
     const normW1 = w1 / totalWeight;
     const normW2 = w2 / totalWeight;
@@ -484,11 +482,12 @@ function calculateDiseaseRisk(geneValues, disease, w1, w2, w3) {
         const values = geneValues[gene.symbol];
         
         if (values) {
-            // Normalize values by baseline
-            const normG = values.genomic / gene.Vmax;
-            const normT = values.transcriptomic / gene.Vmax;
-            const normP = values.proteomic / gene.baselineProtein;
+            // Normalize values by baseline - IMPROVED SCALING
+            const normG = (values.genomic / gene.baselineTPM) * 2;  // Scale up for more sensitivity
+            const normT = (values.transcriptomic / gene.baselineTPM) * 2;
+            const normP = (values.proteomic / gene.baselineProtein) * 2;
             
+            // Apply gene-specific weights
             genomicScore += weight * normG;
             transcriptomicScore += weight * normT;
             proteomicScore += weight * normP;
@@ -496,7 +495,7 @@ function calculateDiseaseRisk(geneValues, disease, w1, w2, w3) {
         }
     }
     
-    // Average across genes
+    // Average across genes if multiple selected
     if (totalGenes > 0) {
         genomicScore /= totalGenes;
         transcriptomicScore /= totalGenes;
@@ -505,7 +504,9 @@ function calculateDiseaseRisk(geneValues, disease, w1, w2, w3) {
     
     // Combine with weights and apply sigmoid
     const combinedScore = normW1 * genomicScore + normW2 * transcriptomicScore + normW3 * proteomicScore + disease.bias;
-    const risk = sigmoid(combinedScore) * 100;
+    
+    // Sigmoid with adjusted steepness for better range
+    const risk = (1 / (1 + Math.exp(-1.5 * combinedScore))) * 100;  // Multiplier for steeper curve
     
     return {
         risk: Math.max(0, Math.min(100, risk)),
@@ -516,6 +517,7 @@ function calculateDiseaseRisk(geneValues, disease, w1, w2, w3) {
         }
     };
 }
+
 
 /**
  * Sigmoid function
@@ -2770,3 +2772,4 @@ if (document.readyState === 'loading') {
 // =============================================================================
 // END OF SCRIPT
 // =============================================================================
+
