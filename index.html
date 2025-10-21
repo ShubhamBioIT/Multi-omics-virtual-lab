@@ -70,6 +70,78 @@
         </div>
     </header>
 
+        </header>
+
+    <!-- Scenario Showcase Section - NEW -->
+    <section class="scenario-showcase">
+        <div class="container">
+            <h2 class="showcase-title">🎯 Explore Pre-Configured Scenarios</h2>
+            <p class="showcase-subtitle">Click any scenario card to learn more and auto-configure the simulator</p>
+            
+            <div class="scenario-cards-grid">
+                
+                <!-- Scenario 1: Healthy State -->
+                <div class="scenario-card" data-scenario="healthy" onclick="showScenarioModal('healthy')">
+                    <div class="scenario-card-icon">✅</div>
+                    <h3 class="scenario-card-title">Healthy State</h3>
+                    <p class="scenario-card-description">Normal gene expression with balanced regulation</p>
+                    <div class="scenario-card-badge low">Low Risk ~10%</div>
+                    <div class="scenario-card-footer">Click to explore →</div>
+                </div>
+                
+                <!-- Scenario 2: Cancer Model -->
+                <div class="scenario-card" data-scenario="cancer" onclick="showScenarioModal('cancer')">
+                    <div class="scenario-card-icon">🔴</div>
+                    <h3 class="scenario-card-title">Cancer Model</h3>
+                    <p class="scenario-card-description">TP53 mutations + TF overexpression</p>
+                    <div class="scenario-card-badge high">High Risk ~75%</div>
+                    <div class="scenario-card-footer">Click to explore →</div>
+                </div>
+                
+                <!-- Scenario 3: Drug Treatment -->
+                <div class="scenario-card" data-scenario="drug-treatment" onclick="showScenarioModal('drug-treatment')">
+                    <div class="scenario-card-icon">💊</div>
+                    <h3 class="scenario-card-title">Drug Treatment</h3>
+                    <p class="scenario-card-description">Enhanced translation + reduced mutations</p>
+                    <div class="scenario-card-badge low">Low Risk ~15%</div>
+                    <div class="scenario-card-footer">Click to explore →</div>
+                </div>
+                
+                <!-- Scenario 4: Chronic Inflammation -->
+                <div class="scenario-card" data-scenario="inflammation" onclick="showScenarioModal('inflammation')">
+                    <div class="scenario-card-icon">🔥</div>
+                    <h3 class="scenario-card-title">Chronic Inflammation</h3>
+                    <p class="scenario-card-description">IL6/TNF overexpression + immune dysregulation</p>
+                    <div class="scenario-card-badge moderate">Moderate Risk ~55%</div>
+                    <div class="scenario-card-footer">Click to explore →</div>
+                </div>
+                
+                <!-- Scenario 5: Alzheimer's Risk -->
+                <div class="scenario-card" data-scenario="alzheimers" onclick="showScenarioModal('alzheimers')">
+                    <div class="scenario-card-icon">🧠</div>
+                    <h3 class="scenario-card-title">Alzheimer's Risk</h3>
+                    <p class="scenario-card-description">APOE4 variant + neuroinflammation</p>
+                    <div class="scenario-card-badge moderate">Moderate Risk ~60%</div>
+                    <div class="scenario-card-footer">Click to explore →</div>
+                </div>
+                
+            </div>
+        </div>
+    </section>
+
+    <!-- Scenario Modal - NEW -->
+    <div id="scenario-modal" class="scenario-modal hidden">
+        <div class="scenario-modal-overlay" onclick="closeScenarioModal()"></div>
+        <div class="scenario-modal-content">
+            <button class="scenario-modal-close" onclick="closeScenarioModal()">&times;</button>
+            <div class="scenario-modal-body" id="scenario-modal-body">
+                <!-- Dynamically populated -->
+            </div>
+        </div>
+    </div>
+
+
+
     <!-- Main Application Container -->
     <main class="main-container" role="main">
         <div class="container">
@@ -524,5 +596,6 @@
     <script src="script.js"></script>
 </body>
 </html>
+
 
 
