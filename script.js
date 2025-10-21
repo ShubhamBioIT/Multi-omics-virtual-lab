@@ -997,6 +997,42 @@ function simulationStep() {
     }
 }
 
+
+/**
+ * Detect which scenario is currently applied based on parameters and gene selections
+ */
+function detectAppliedScenario() {
+    // Check if DETAILED_SCENARIOS exists
+    if (typeof DETAILED_SCENARIOS === 'undefined') {
+        return null;
+    }
+    
+    for (const [key, scenario] of Object.entries(DETAILED_SCENARIOS)) {
+        // Check if genes match (allow for some flexibility)
+        const selectedSymbols = state.selectedGenes.map(g => g.symbol).sort();
+        const scenarioSymbols = scenario.selectedGenes.sort();
+        
+        const genesMatch = selectedSymbols.length === scenarioSymbols.length &&
+            selectedSymbols.every((symbol, index) => symbol === scenarioSymbols[index]);
+        
+        // Check if key parameters are close (within 10% tolerance)
+        const tfMatch = Math.abs(state.params.tfConcentration - scenario.params.tfConcentration) < 50;
+        const mutationMatch = Math.abs(state.params.mutationSeverity - scenario.params.mutationSeverity) < 0.15;
+        const methylationMatch = Math.abs(state.params.methylationFactor - scenario.params.methylationFactor) < 0.15;
+        
+        const paramsMatch = tfMatch && mutationMatch && methylationMatch;
+        
+        // If both genes and key parameters match, return this scenario
+        if (genesMatch && paramsMatch) {
+            return scenario;
+        }
+    }
+    
+    return null;
+}
+
+
+
 /**
  * Export comprehensive HTML report with all simulation results
  */
@@ -1078,28 +1114,6 @@ async function exportHTMLReport() {
     }
 }
 
-
-/**
- * Detect which scenario is currently applied
- */
-function detectAppliedScenario() {
-    for (const [key, scenario] of Object.entries(DETAILED_SCENARIOS)) {
-        // Check if genes match
-        const genesMatch = scenario.selectedGenes.length === state.selectedGenes.length &&
-            scenario.selectedGenes.every(symbol => 
-                state.selectedGenes.some(g => g.symbol === symbol)
-            );
-        
-        // Check if parameters are close
-        const paramsMatch = Math.abs(state.params.tfConcentration - scenario.params.tfConcentration) < 10 &&
-            Math.abs(state.params.mutationSeverity - scenario.params.mutationSeverity) < 0.1;
-        
-        if (genesMatch && paramsMatch) {
-            return scenario;
-        }
-    }
-    return null;
-}
 
 
 /**
@@ -3527,6 +3541,7 @@ if (document.readyState === 'loading') {
 // =============================================================================
 // END OF SCRIPT
 // =============================================================================
+
 
 
 
