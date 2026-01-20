@@ -248,18 +248,6 @@ Multi-omics-virtual-lab/
 - [x] HTML report export
 - [x] Zero-dependency architecture
 
-### 🔄 Version 2.0 (Planned - Q2 2026)
-- [ ] Gene regulatory networks
-- [ ] Single-cell heterogeneity modeling
-- [ ] Patient data integration
-- [ ] Enhanced disease models
-
-### 🔮 Version 3.0 (Future - Q4 2026)
-- [ ] Machine learning-based risk prediction
-- [ ] Clinical validation framework
-- [ ] Drug response optimization
-- [ ] Multi-patient cohort simulation
-
 See the [open issues](https://github.com/ShubhamBioIT/Multi-omics-virtual-lab/issues) for proposed features and known issues.
 
 ---
