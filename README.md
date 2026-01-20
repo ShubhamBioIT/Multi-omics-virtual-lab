@@ -1,229 +1,403 @@
 # 🧬 Virtual Multi-Omics Gene Regulation & Disease Prediction Laboratory
 
-[![GitHub stars](https://img.shields.io/github/stars/shubhammahindrakar/virtual-multiomics-lab?style=social)](https://github.com/shubhammahindrakar/virtual-multiomics-lab)
-[![GitHub forks](https://img.shields.io/github/forks/shubhammahindrakar/virtual-multiomics-lab?style=social)](https://github.com/shubhammahindrakar/virtual-multiomics-lab)
-[![GitHub license](https://img.shields.io/github/license/shubhammahindrakar/virtual-multiomics-lab)](https://github.com/shubhammahindrakar/virtual-multiomics-lab/blob/main/LICENSE)
-[![GitHub issues](https://img.shields.io/github/issues/shubhammahindrakar/virtual-multiomics-lab)](https://github.com/shubhammahindrakar/virtual-multiomics-lab/issues)
+<div align="center">
 
-**An interactive, web-based simulator for multi-omics integration modeling gene regulation across genomics, transcriptomics, and proteomics layers to predict disease risk. Educational tool for systems biology, bioinformatics, and computational medicine.**
+[![GitHub stars](https://img.shields.io/github/stars/ShubhamBioIT/Multi-omics-virtual-lab?style=social)](https://github.com/ShubhamBioIT/Multi-omics-virtual-lab)
+[![GitHub forks](https://img.shields.io/github/forks/ShubhamBioIT/Multi-omics-virtual-lab?style=social)](https://github.com/ShubhamBioIT/Multi-omics-virtual-lab)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![Status](https://img.shields.io/badge/status-Active-brightgreen)](https://github.com/ShubhamBioIT/Multi-omics-virtual-lab)
+
+**An interactive web-based simulator for multi-omics integration modeling gene regulation across genomics, transcriptomics, and proteomics layers to predict disease risk.**
+
+[🚀 Live Demo](https://shubhambioit.github.io/Multi-omics-virtual-lab/) • [📖 Documentation](#documentation) • [🐛 Report Bug](https://github.com/ShubhamBioIT/Multi-omics-virtual-lab/issues) • [✨ Request Feature](https://github.com/ShubhamBioIT/Multi-omics-virtual-lab/issues)
+
+</div>
+
+---
+
+## 📸 Demo
+
+<div align="center">
+  <img src="demo-screenshot.png" alt="Virtual Multi-Omics Lab Interface" width="800"/>
+  <p><em>Interactive multi-omics simulation interface with real-time visualization</em></p>
+</div>
+
+---
+
+## 📋 Table of Contents
+
+- [About The Project](#about-the-project)
+- [Features](#features)
+- [Getting Started](#getting-started)
+- [How It Works](#how-it-works)
+- [Biological Models](#biological-models)
+- [Educational Applications](#educational-applications)
+- [Project Structure](#project-structure)
+- [Roadmap](#roadmap)
+- [Contributing](#contributing)
+- [Team](#team)
+- [Acknowledgments](#acknowledgments)
+- [License](#license)
+- [Contact](#contact)
+
+---
+
+## 🎯 About The Project
+
+This virtual laboratory is an educational tool developed as part of a **Mathematical Modelling** course project, designed to simulate and visualize multi-omics integration in gene regulation and disease prediction. The simulator models the complete biological pipeline from genomic information through transcriptomics and proteomics to disease risk assessment.
+
+### 🎓 Academic Context
+
+- **Course**: Mathematical Modelling
+- **Institution**: Under the guidance of **Dr. Shyam Diwakar**
+- **Purpose**: Educational tool for systems biology, bioinformatics, and computational medicine
+
+### 🔬 Key Capabilities
+
+- Real-time simulation of 50 hours of cellular biology with 0.1-hour resolution
+- Multi-layered omics integration (genomics → transcriptomics → proteomics → disease)
+- 10 well-characterized genes and 6 major disease models
+- 5 pre-configured clinical scenarios
+- Interactive parameter manipulation with instant visualization
+
+---
 
 ## ✨ Features
 
-- 🧬 **Multi-Omics Integration**: Models genomics → transcriptomics → proteomics → disease risk pipeline
-- ⏱️ **Real-Time Temporal Dynamics**: Simulates 50 hours of cellular biology with 0.1-hour resolution
-- 📊 **Interactive Visualizations**: Three Chart.js-powered charts with real-time updates
-- 🎯 **5 Pre-Configured Scenarios**: Healthy, Cancer, Drug Treatment, Inflammation, Alzheimer's
-- 📄 **Professional HTML Reports**: Exportable reports with embedded charts and analysis
-- 🌐 **Zero Dependencies**: Pure HTML/CSS/JS - works offline in any modern browser
-- 🎛️ **Interactive Parameters**: Adjust TF concentration, mutations, methylation, protein degradation, etc.
-- ⚡ **Instant Results**: Parameter changes → immediate chart updates (no waiting!)
+### Core Functionality
 
-## 🏆 Project Status
+- 🧬 **Multi-Omics Integration** - Models the complete genomics → transcriptomics → proteomics → disease risk pipeline
+- ⏱️ **Temporal Dynamics** - Simulates 50 hours of cellular biology with high temporal resolution
+- 📊 **Interactive Visualizations** - Three Chart.js-powered real-time charts
+- 🎯 **Clinical Scenarios** - Pre-configured scenarios: Healthy, Cancer, Drug Treatment, Inflammation, Alzheimer's
+- 📄 **Export Functionality** - Generate professional HTML reports with embedded charts
+- 🎛️ **Parameter Control** - Adjust transcription factors, mutations, methylation, protein degradation
+- ⚡ **Instant Results** - Real-time parameter updates with immediate visual feedback
+- 🌐 **Zero Dependencies** - Pure HTML/CSS/JavaScript - works offline in any modern browser
 
-[![Project Status](https://img.shields.io/badge/status-MVP%20Complete-brightgreen)](https://github.com/shubhammahindrakar/virtual-multiomics-lab)
-[![License](https://img.shields.io/github/license/shubhammahindrakar/virtual-multiomics-lab)](https://github.com/shubhammahindrakar/virtual-multiomics-lab/blob/main/LICENSE)
+### Technical Highlights
 
-**Version 1.0** - Educational MVP with 10 genes × 6 diseases
+```
+✓ Hill Equation for gene regulation
+✓ Stochastic noise modeling
+✓ ODE solver for protein dynamics
+✓ Sigmoid function for disease risk
+✓ Client-side computation (no server required)
+✓ Responsive design
+```
 
-## 🎯 Quick Demo
-
-<div align="center">
-  <img src="https://github.com/shubhammahindrakar/virtual-multiomics-lab/assets/12345678/demo-gif.gif" alt="Demo GIF" width="800"/>
-</div>
+---
 
 ## 🚀 Getting Started
 
-### 📱 Online Demo
-[🔗 Live Demo](https://shubhammahindrakar.github.io/virtual-multiomics-lab/)
+### Prerequisites
 
-### 🖥️ Local Setup (Zero Installation!)
-1. Clone/Download this repository
-2. Open `index.html` in any modern web browser
-3. **That's it!** No dependencies, no installation, works offline
+- Any modern web browser (Chrome, Firefox, Safari, Edge)
+- No installation required!
+- No dependencies needed!
 
-```bash
-git clone https://github.com/shubhammahindrakar/virtual-multiomics-lab.git
-cd virtual-multiomics-lab
-open index.html  # Mac
-# OR
-start index.html  # Windows
-# OR
-xdg-open index.html  # Linux
-🧪 How It Works
-Core Biological Pipeline
-text
-🧬 Genomics Layer (Hill Equation)
-    ↓
-📊 Transcriptomics Layer (Stochastic Noise)
-    ↓
-🔬 Proteomics Layer (ODE Solver)
-    ↓
-⚕️ Disease Risk (Sigmoid Integration)
-Key Mathematical Models
-Hill Equation (Gene Expression):
+### Online Access
 
-text
-E_gene = Vmax × [TF]^n / (Kd^n + [TF]^n) × (1-methylation) × (1-mutation)
-Stochastic Expression:
+Visit the live demo: **[https://shubhambioit.github.io/Multi-omics-virtual-lab/](https://shubhambioit.github.io/Multi-omics-virtual-lab/)**
 
-text
+### Local Setup
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/ShubhamBioIT/Multi-omics-virtual-lab.git
+   cd Multi-omics-virtual-lab
+   ```
+
+2. **Open in browser**
+   ```bash
+   # macOS
+   open index.html
+   
+   # Windows
+   start index.html
+   
+   # Linux
+   xdg-open index.html
+   ```
+
+3. **Start exploring!** No build process, no npm install, just open and use.
+
+---
+
+## 🧪 How It Works
+
+### Biological Pipeline
+
+```
+🧬 Genomics Layer
+    ↓ (Hill Equation)
+📊 Transcriptomics Layer
+    ↓ (Stochastic Noise)
+🔬 Proteomics Layer
+    ↓ (ODE Solver)
+⚕️ Disease Risk Prediction
+    ↓ (Sigmoid Integration)
+📈 Clinical Output
+```
+
+### Mathematical Foundation
+
+#### 1. Gene Expression (Hill Equation)
+```
+E_gene = (V_max × [TF]^n) / (K_d^n + [TF]^n) × (1 - methylation) × (1 - mutation)
+```
+
+#### 2. Transcriptomics (Stochastic Model)
+```
 T = E_gene × (1 + ε), where ε ~ N(0, σ_noise)
-Protein Dynamics (ODE):
+```
 
-text
+#### 3. Proteomics (ODE)
+```
 dP/dt = η × T - δ × P
-Disease Risk:
+```
 
-text
+#### 4. Disease Risk (Sigmoid)
+```
 Risk_D = sigmoid(w₁×f_G + w₂×f_T + w₃×f_P + bias_D)
-🧬 Genes & Diseases Modeled
-10 Well-Characterized Genes
-Gene	Biological Role
-TP53	Tumor suppressor
-BRCA1	DNA repair
-EGFR	Growth factor receptor
-APOE	Lipid metabolism (Alzheimer's)
-INS	Insulin regulation
-IL6	Pro-inflammatory cytokine
-TNF	Tumor necrosis factor
-GAPDH	Housekeeping reference
-VEGFA	Angiogenesis
-MYC	Oncogene
-6 Major Diseases
-Breast Cancer • Alzheimer's Disease • Type 2 Diabetes
+```
 
-Chronic Inflammation • Cardiovascular Disease • Lung Cancer
+---
 
-🎯 Pre-Configured Scenarios
-Scenario	Risk Level	Key Features
-✅ Healthy	~10%	Normal TF, no mutations, optimal dynamics
-🔴 Cancer	~75%	High TF, TP53 mutation (0.85), low degradation
-💊 Drug Treated	~15%	Reduced TF, enhanced translation, low mutations
-🔥 Inflammation	~55%	IL6/TNF overexpression
-🧠 Alzheimer's	~60%	APOE4 variant, high methylation
-📊 Results & Validation
-Case Study: Healthy → Cancer
-Parameter	Change	Breast Cancer Risk
-TF Conc.	↑1500%	8% → 78%
-Mutation	↑8500%	870% risk increase
-Degradation	↓60%	Non-linear effect!
-Scientific Validation
-Hill Equation: 10,000+ papers since 1910 (Alon, Systems Biology 2006)
+## 🧬 Biological Models
 
-Stochastic Noise: Elowitz et al., Science 2002
+### Genes Modeled (n=10)
 
-Protein Dynamics: Standard ODE model (Alberts, Molecular Biology of the Cell)
+| Gene | Function | Disease Association |
+|------|----------|---------------------|
+| **TP53** | Tumor suppressor | Cancer |
+| **BRCA1** | DNA repair | Breast/Ovarian Cancer |
+| **EGFR** | Growth factor receptor | Lung Cancer |
+| **APOE** | Lipid metabolism | Alzheimer's Disease |
+| **INS** | Insulin regulation | Type 2 Diabetes |
+| **IL6** | Pro-inflammatory cytokine | Inflammation |
+| **TNF** | Tumor necrosis factor | Inflammation |
+| **GAPDH** | Housekeeping gene | Reference control |
+| **VEGFA** | Angiogenesis | Cancer, CVD |
+| **MYC** | Oncogene | Multiple cancers |
 
-Gene Expression: GTEx database baseline values
+### Diseases Modeled (n=6)
 
-Disease Associations: GWAS studies + literature
+1. 🎗️ **Breast Cancer**
+2. 🧠 **Alzheimer's Disease**
+3. 💉 **Type 2 Diabetes**
+4. 🔥 **Chronic Inflammation**
+5. ❤️ **Cardiovascular Disease**
+6. 🫁 **Lung Cancer**
 
-🛠️ Project Structure
-text
-virtual-multiomics-lab/
-├── index.html          # Main application
-├── style.css           # Professional styling & animations
-├── script.js           # Core simulation engine (Hill equation, ODE solver, etc.)
-├── README.md           # 📄 You're reading it!
-└── LICENSE             # MIT License
-🔬 Educational Applications
-MSc Bioinformatics Courses
+### Pre-Configured Scenarios
 
-Systems Biology Workshops
+| Scenario | Risk Level | Key Features |
+|----------|------------|--------------|
+| ✅ **Healthy** | ~10% | Normal TF, no mutations, optimal protein dynamics |
+| 🔴 **Cancer** | ~75% | High TF concentration, TP53 mutation (0.85) |
+| 💊 **Drug Treated** | ~15% | Reduced TF, enhanced translation efficiency |
+| 🔥 **Inflammation** | ~55% | IL6/TNF overexpression |
+| 🧠 **Alzheimer's** | ~60% | APOE4 variant, high methylation |
 
-Research Hypothesis Generation
+---
 
-PhD Training & Literature Review
+## 🎓 Educational Applications
 
-Computational Medicine Demonstrations
+### Target Audience
+- MSc Bioinformatics students
+- Systems Biology researchers
+- Computational Medicine learners
+- Biomedical Engineering programs
+- PhD candidates in related fields
 
-Precision Medicine Education
+### Learning Outcomes
+- ✅ Understand multi-omics data integration
+- ✅ Master Hill equation for gene regulation
+- ✅ Learn ODE solvers for biological dynamics
+- ✅ Appreciate stochasticity in biological systems
+- ✅ Recognize non-linearity in disease progression
+- ✅ Experience temporal dynamics in cellular processes
 
-🎓 Learning Outcomes
-Understand multi-omics integration (genomics → transcriptomics → proteomics)
+---
 
-Master Hill equation for gene regulation
+## 📁 Project Structure
 
-Learn ODE solvers for protein dynamics
+```
+Multi-omics-virtual-lab/
+│
+├── index.html           # Main application interface
+├── style.css            # Professional styling & animations
+├── script.js            # Core simulation engine
+│                        # (Hill equation, ODE solver, risk models)
+├── README.md            # Project documentation
+├── LICENSE              # MIT License
+├── demo-screenshot.png  # Interface screenshot
+└── CONTRIBUTING.md      # Contribution guidelines (optional)
+```
 
-Appreciate stochasticity in biology
+---
 
-See non-linearity in biological systems
+## 📈 Roadmap
 
-Experience temporal dynamics in disease
+### ✅ Version 1.0 (Current - MVP)
+- [x] Multi-omics pipeline implementation
+- [x] Real-time temporal simulation
+- [x] 5 clinical scenarios
+- [x] Interactive visualizations
+- [x] HTML report export
+- [x] Zero-dependency architecture
 
-📈 Roadmap
-Version 1.0 (Current - MVP)
-✅ Multi-omics pipeline • ✅ Real-time simulation • ✅ 5 scenarios • ✅ HTML export
+### 🔄 Version 2.0 (Planned - Q2 2026)
+- [ ] Gene regulatory networks
+- [ ] Single-cell heterogeneity modeling
+- [ ] Patient data integration
+- [ ] Enhanced disease models
 
-Version 2.0 (Q2 2026)
-🔄 Gene regulatory networks • 🔄 Single-cell heterogeneity • 🔄 Patient data integration
+### 🔮 Version 3.0 (Future - Q4 2026)
+- [ ] Machine learning-based risk prediction
+- [ ] Clinical validation framework
+- [ ] Drug response optimization
+- [ ] Multi-patient cohort simulation
 
-Version 3.0 (Q4 2026)
-🔄 Machine learning risk models • 🔄 Clinical validation • 🔄 Drug optimization
+See the [open issues](https://github.com/ShubhamBioIT/Multi-omics-virtual-lab/issues) for proposed features and known issues.
 
-🖥️ Technology Stack
-Frontend	Backend	Visualization	Math
-HTML5	None!	Chart.js	Hill Equation, ODEs
-CSS3	(Client-side)	Canvas API	Sigmoid, Gaussian
-JavaScript ES6+			Euler Method
-📝 Citation
+---
+
+## 🤝 Contributing
+
+Contributions make the open-source community an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
+
+### How to Contribute
+
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the Branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+### Areas for Contribution
+- 🐛 Bug fixes
+- ✨ New features
+- 📚 Documentation improvements
+- 🧪 Additional disease models
+- 🎨 UI/UX enhancements
+- 🔬 Biological accuracy improvements
+
+---
+
+## 👥 Team
+
+This project was developed as part of a **Mathematical Modelling** course under the guidance of **Dr. Shyam Diwakar**.
+
+### Project Team
+
+<table>
+  <tr>
+    <td align="center">
+      <img src="https://github.com/ShubhamBioIT.png" width="100px;" alt="Shubham Mahindrakar"/><br />
+      <sub><b>Shubham Mahindrakar</b></sub><br />
+      <a href="https://github.com/ShubhamBioIT">💻</a>
+    </td>
+    <td align="center">
+      <sub><b>Aparna</b></sub><br />
+      💻
+    </td>
+    <td align="center">
+      <sub><b>Niveditha</b></sub><br />
+      💻
+    </td>
+  </tr>
+</table>
+
+### Academic Supervisor
+
+**Dr. Shyam Diwakar**  
+Course Instructor - Mathematical Modelling
+
+---
+
+## 🙏 Acknowledgments
+
+### Scientific Foundations
+- **Uri Alon** - *An Introduction to Systems Biology* (Hill equation, ODE models)
+- **Michael Elowitz** - Stochastic gene expression (*Science* 2002)
+- **GTEx Consortium** - Gene expression baseline values
+- **GWAS Catalog** - Disease-gene associations
+
+### Technical Tools
+- **[Chart.js](https://www.chartjs.org/)** - Beautiful interactive visualizations
+- **[MDN Web Docs](https://developer.mozilla.org/)** - Web development reference
+
+### Educational Resources
+- Systems Biology literature and databases
+- Bioinformatics textbooks and online courses
+- Open-source community contributions
+
+---
+
+## 📜 License
+
+This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
+
+```
+MIT License
+Copyright (c) 2026 Shubham Mahindrakar, Aparna, Niveditha
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction...
+```
+
+---
+
+## 📞 Contact
+
+### Project Repository
+🔗 **GitHub**: [https://github.com/ShubhamBioIT/Multi-omics-virtual-lab](https://github.com/ShubhamBioIT/Multi-omics-virtual-lab)
+
+### Live Demo
+🌐 **Web Application**: [https://shubhambioit.github.io/Multi-omics-virtual-lab/](https://shubhambioit.github.io/Multi-omics-virtual-lab/)
+
+### Lead Developer
+**Shubham Mahindrakar**  
+📧 Email: [shubham@email.com](mailto:shubham@email.com)  
+💼 LinkedIn: [linkedin.com/in/shubhammahindrakar](https://linkedin.com/in/shubhammahindrakar)  
+🌐 Website: [shubhammahindrakar.github.io](https://shubhammahindrakar.github.io)
+
+---
+
+## 📝 Citation
+
 If you use this tool in your research or teaching, please cite:
 
-text
-Mahindrakar, S. (2026). Virtual Multi-Omics Gene Regulation & Disease Prediction Laboratory [Software]. 
-https://github.com/shubhammahindrakar/virtual-multiomics-lab
-BibTeX:
+### APA Format
+```
+Mahindrakar, S., Aparna, & Niveditha. (2026). Virtual Multi-Omics Gene Regulation 
+& Disease Prediction Laboratory [Software]. GitHub. 
+https://github.com/ShubhamBioIT/Multi-omics-virtual-lab
+```
 
-text
-@misc{virtual_multiomics_2026,
-  author = {Mahindrakar, Shubham},
+### BibTeX
+```bibtex
+@software{virtual_multiomics_2026,
+  author = {Mahindrakar, Shubham and Aparna and Niveditha},
   title = {Virtual Multi-Omics Gene Regulation & Disease Prediction Laboratory},
   year = {2026},
   publisher = {GitHub},
-  howpublished = {\url{https://github.com/shubhammahindrakar/virtual-multiomics-lab}},
+  url = {https://github.com/ShubhamBioIT/Multi-omics-virtual-lab},
+  note = {Mathematical Modelling Course Project supervised by Dr. Shyam Diwakar}
 }
-🤝 Contributing
-Contributions welcome! See CONTRIBUTING.md
+```
 
-Fork the repository
-
-Create feature branch (git checkout -b feature/amazing-feature)
-
-Commit changes (git commit -m 'Add some amazing feature')
-
-Push to branch (git push origin feature/amazing-feature)
-
-Open Pull Request
-
-📄 License
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-text
-MIT License
-Copyright (c) 2026 Shubham Mahindrakar
-🙏 Acknowledgments
-Uri Alon - An Introduction to Systems Biology (Hill equation, ODE models)
-
-Michael Elowitz - Stochastic gene expression (Science 2002)
-
-GTEx Consortium - Gene expression baseline values
-
-GWAS Catalog - Disease-gene associations
-
-Chart.js Team - Beautiful interactive charts
-
-📞 Contact
-Shubham Mahindrakar
-Bioinformatics Researcher
-shubham@email.com
-LinkedIn
-Personal Website
+---
 
 <div align="center">
-🧬 Bringing Systems Biology to Life, One Gene at a Time 🧬
 
-Footer
-Footer
+### 🧬 Bringing Systems Biology to Life, One Gene at a Time 🧬
 
-</div> ```
+**Made with ❤️ for Science**
+
+[⬆ Back to Top](#-virtual-multi-omics-gene-regulation--disease-prediction-laboratory)
+
+</div>
