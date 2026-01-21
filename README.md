@@ -301,7 +301,12 @@ This project was developed as part of a **Mathematical Modelling** course under 
 ### Academic Supervisor
 
 **Dr. Shyam Diwakar**  
-Course Instructor - Mathematical Modelling
+Course Instructor - Mathematical Modelling | Amrita school of Biotechnology
+
+### External Guide
+**Dr. Mano Joseph Mathew** 
+Head of Bioinformatics Masters Program & Biology Department | EFREI Research Lab | Paris, France
+
 
 ---
 
@@ -330,7 +335,7 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 
 ```
 MIT License
-Copyright (c) 2026 Shubham Mahindrakar, Aparna, Niveditha
+Copyright (c) 2026 Shubham Mahindrakar
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
