@@ -349,7 +349,7 @@ in the Software without restriction...
 
 ### Lead Developer
 **Shubham Mahindrakar**  
-📧 Email: [shubham@email.com](mailto:shubham@email.com)  
+📧 Email: [shubhammahindrakar2104@email.com](mailto:shubhammahindrakar2104@email.com)  
 💼 LinkedIn: [linkedin.com/in/shubhammahindrakar](https://linkedin.com/in/shubhammahindrakar)  
 🌐 Website: [shubhammahindrakar.github.io](https://shubhammahindrakar.github.io)
 
