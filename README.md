@@ -361,7 +361,7 @@ If you use this tool in your research or teaching, please cite:
 
 ### APA Format
 ```
-Mahindrakar, S., Aparna, & Niveditha. (2026). Virtual Multi-Omics Gene Regulation 
+Mahindrakar Shubham, Dr. Shyam Diwakar, Dr. Mano Joseph Mathew, Aparna, & Niveditha. (2026). Virtual Multi-Omics Gene Regulation 
 & Disease Prediction Laboratory [Software]. GitHub. 
 https://github.com/ShubhamBioIT/Multi-omics-virtual-lab
 ```
@@ -369,9 +369,9 @@ https://github.com/ShubhamBioIT/Multi-omics-virtual-lab
 ### BibTeX
 ```bibtex
 @software{virtual_multiomics_2026,
-  author = {Mahindrakar, Shubham and Aparna and Niveditha},
+  author = {Mahindrakar Shubham, Dr. Shyam Diwakar, Dr. Mano Joseph Mathew, Aparna and Niveditha},
   title = {Virtual Multi-Omics Gene Regulation & Disease Prediction Laboratory},
-  year = {2026},
+  year = {2026}
   publisher = {GitHub},
   url = {https://github.com/ShubhamBioIT/Multi-omics-virtual-lab},
   note = {Mathematical Modelling Course Project supervised by Dr. Shyam Diwakar}
